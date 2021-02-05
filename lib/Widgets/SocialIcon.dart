@@ -21,7 +21,7 @@ class SocialIcon extends StatelessWidget {
           decoration: BoxDecoration(
               shape: BoxShape.circle,
               gradient: LinearGradient(
-                colors: colors,
+                colors: this.colors,
               )
           ),
           child: RawMaterialButton(

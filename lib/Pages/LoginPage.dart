@@ -1,4 +1,5 @@
 
+import 'package:ezparking/Services/Auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../Widgets/FormCard.dart';
@@ -6,6 +7,15 @@ import '../Widgets/SocialIcon.dart';
 import '../Widgets/CustomIcons.dart';
 
 class LoginPage extends StatelessWidget  {
+  const LoginPage({Key key, @required this.auth}) : super(key: key);
+  final AuthBase auth;
+  Future<void> _signInAnonymously() async {
+    try {
+      await auth.signInAnonymously();
+    } catch (e) {
+      print(e.toString());
+    }
+  }
 
   Widget horizontalLine() => Padding(
     padding: EdgeInsets.symmetric(horizontal: 16.0),
@@ -181,7 +191,7 @@ class LoginPage extends StatelessWidget  {
                               ),
                             ),
                             InkWell(
-                              onTap: (){},
+                              onTap: _signInAnonymously,
                               child: Text(
                                   'Sign in Anonymously',
                                   style: TextStyle(
