@@ -21,7 +21,7 @@ class LandingPage extends StatelessWidget {
             );
           }
           return MapPage(
-//            auth: auth,
+            auth: auth,
           );
         }
         return Scaffold(

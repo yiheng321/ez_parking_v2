@@ -4,15 +4,15 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter/material.dart';
 
 class MapPage extends StatelessWidget{
-  // MapPage({Key key, @required this.auth}) : super(key: key);
-  // final AuthBase auth;
-  // Future<void> _signOut() async {
-  //   try {
-  //     await auth.signOut();
-  //   } catch (e) {
-  //     print(e.toString());
-  //   }
-  // }
+  MapPage({Key key, @required this.auth}) : super(key: key);
+  final AuthBase auth;
+  Future<void> _signOut() async {
+    try {
+      await auth.signOut();
+    } catch (e) {
+      print(e.toString());
+    }
+  }
   GoogleMapController mapController;
   LatLng _initialcameraposition = LatLng(1.282302, 103.858528);
   GoogleMapController _controller;
@@ -44,7 +44,7 @@ class MapPage extends StatelessWidget{
                   color: Colors.white,
                 ),
               ),
-              onPressed: (){},
+              onPressed: _signOut,
             ),
           ],
         ),

@@ -17,7 +17,8 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
-      home:  MapPage(
+      home:  LandingPage(
+        auth: Auth(),
       ),
     );
   }
