@@ -16,6 +16,13 @@ class LoginPage extends StatelessWidget  {
       print(e.toString());
     }
   }
+  Future<void> _signInWithGoogle() async {
+    try {
+      await auth.signInWithGoogle();
+    } catch (e) {
+      print(e.toString());
+    }
+  }
 
   Widget horizontalLine() => Padding(
     padding: EdgeInsets.symmetric(horizontal: 16.0),
@@ -153,7 +160,7 @@ class LoginPage extends StatelessWidget  {
                                 Color(0xFFff355d),
                               ],
                               icondata: CustomIcons.googlePlus,
-                              onPressed: (){},
+                              onPressed: _signInWithGoogle,
                             ),
                           ],
                         ),
