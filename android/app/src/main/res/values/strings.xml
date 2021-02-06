@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">EzParking</string>
-    <string name="facebook_app_id">728699370998478</string>
-    <string name="fb_login_protocol_scheme">fb728699370998478</string>
+    <string name="app_name">ezparking</string>
+    <string name="facebook_app_id">800602510668183</string>
+    <string name="fb_login_protocol_scheme">fb800602510668183</string>
 </resources>

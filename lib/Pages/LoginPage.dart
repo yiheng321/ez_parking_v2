@@ -23,7 +23,13 @@ class LoginPage extends StatelessWidget  {
       print(e.toString());
     }
   }
-
+  Future<void> _signInWithFacebook() async {
+    try {
+      await auth.signInWithFacebook();
+    } catch (e) {
+      print(e.toString());
+    }
+  }
   Widget horizontalLine() => Padding(
     padding: EdgeInsets.symmetric(horizontal: 16.0),
     child: Container(
@@ -152,7 +158,7 @@ class LoginPage extends StatelessWidget  {
                                 Color(0xFF00eaf8),
                               ],
                               icondata: CustomIcons.facebook,
-                              onPressed: (){},
+                              onPressed: _signInWithFacebook,
                             ),
                             SocialIcon(
                               colors: [
