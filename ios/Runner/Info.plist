@@ -2,23 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>CFBundleURLTypes</key>
-    <array>
-	    <dict>
-		    <key>CFBundleTypeRole</key>
-		    <string>Editor</string>
-		    <key>CFBundleURLSchemes</key>
-		    <array>
-			    <!-- TODO Replace this value: -->
-			    <!-- Copied from GoogleService-Info.plist key REVERSED_CLIENT_ID -->
-			    <string>com.googleusercontent.apps.550043065107-h1ghc58vp5plfei7avmu836d5j033k2h</string>
-		    </array>
-	    </dict>
-    </array>
-	<key>NSLocationAlwaysUsageDescription</key>
-    <string>Your location is required for xyz benefits for you</string>
-    <key>NSLocationWhenInUseUsageDescription</key>
-    <string>Your location is required for xyz benefits for you</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>

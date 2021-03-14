@@ -1,49 +1,42 @@
 {
   "project_info": {
-    "project_number": "550043065107",
-    "project_id": "ezparking-a137c",
-    "storage_bucket": "ezparking-a137c.appspot.com"
+    "project_number": "97032881490",
+    "project_id": "ezparking-b2885",
+    "storage_bucket": "ezparking-b2885.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:550043065107:android:542547358ba172a96898e6",
+        "mobilesdk_app_id": "1:97032881490:android:7a95e8b07fd604724f268b",
         "android_client_info": {
           "package_name": "com.example.ezparking"
         }
       },
       "oauth_client": [
         {
-          "client_id": "550043065107-1f74gqlt3ecgi9v8a2lq81nf7v6no6v5.apps.googleusercontent.com",
+          "client_id": "97032881490-0spndk8kfa3akikg32iho1nt9he4ui6m.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.ezparking",
-            "certificate_hash": "2d73ebe111c76a22087a4dda0e90860d86357414"
+            "certificate_hash": "85d194cb4995328d5717e6cff99e0133db9d2515"
           }
         },
         {
-          "client_id": "550043065107-6inirj15s0ohl0thovu7pfmj1gjifkhn.apps.googleusercontent.com",
+          "client_id": "97032881490-arkq1lsqpvsuq84fusi2o9k5reljjtns.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyC8zMGLnFglbdWrs95OsTscO-JrOoqKiuU"
+          "current_key": "AIzaSyB9TUPIU7lxtf8BV1NlVWcYVWqAPDGZ3TY"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "550043065107-6inirj15s0ohl0thovu7pfmj1gjifkhn.apps.googleusercontent.com",
+              "client_id": "97032881490-arkq1lsqpvsuq84fusi2o9k5reljjtns.apps.googleusercontent.com",
               "client_type": 3
-            },
-            {
-              "client_id": "550043065107-h1ghc58vp5plfei7avmu836d5j033k2h.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.example.ezparking"
-              }
             }
           ]
         }
