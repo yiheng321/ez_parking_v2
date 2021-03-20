@@ -12,7 +12,7 @@ class Review{
 
   Review.fromMap(Map<String, dynamic> map) {
     _id = map["id"];
-    _carParkNo = map['Review'];
+    _carParkNo = map['carParkNo'];
     _cost = map['cost'];
     _convenience = map['convenience'];
     _security = map['security'];
