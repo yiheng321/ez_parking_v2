@@ -2,9 +2,9 @@
 import 'package:ezparking/Services/Auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../Widgets/FormCard.dart';
-import '../Widgets/SocialIcon.dart';
-import '../Widgets/CustomIcons.dart';
+import 'package:ezparking/Utils/FormCard.dart';
+import 'package:ezparking/Utils/SocialIcon.dart';
+import 'package:ezparking/Utils/CustomIcons.dart';
 
 class LoginPage extends StatelessWidget  {
   const LoginPage({Key key, @required this.auth}) : super(key: key);
