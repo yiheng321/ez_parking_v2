@@ -69,6 +69,20 @@ class CarparkDataBase {
     }
     return carparks;
   }
+
+  Future<Carpark> getSingaleCarparkbyCarparkNo(String carparkNumber) async{
+    var dbClient = await db;
+    List<Map> maps = await dbClient.rawQuery("SELECT * FROM $TABLE where $carParkNo = $carparkNumber");
+    Carpark carpark;
+    if (maps.length > 0) {
+      for (int i = 0; i < maps.length; i++) {
+        carpark = Carpark.fromMap(maps[0]);
+        break;
+      }
+    }
+    return carpark;
+  }
+
   Future<List<Carpark>> getCarparkByRadius(double xmin, double ymin, double xmax, double ymax) async{
     var dbClient = await db;
     List<Map> maps = await dbClient.query(TABLE, where: '$xCoord BETWEEN $xmin AND $xmax AND $yCoord BETWEEN $ymin AND $ymax');

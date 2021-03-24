@@ -62,6 +62,19 @@ class ReviewDataBase {
     }
     return reviews;
   }
+  Future<Review> getSingaleReviewbyCarparkNo(String carparkNumber) async{
+    var dbClient = await db;
+    List<Map> maps = await dbClient.rawQuery("SELECT * FROM $TABLE where $carParkNo = $carparkNumber");
+    Review review;
+    if (maps.length > 0) {
+      for (int i = 0; i < maps.length; i++) {
+        review = Review.fromMap(maps[0]);
+        break;
+      }
+    }
+    return review;
+  }
+
 
   Future<int> deleteReviewById(int id) async {
     var dbClient = await db;
