@@ -1,47 +1,67 @@
-import 'dart:async' show Future, Timer;
-import 'dart:convert';
-import 'package:ezparking/Model/CarparkInfo.dart';
-import 'package:http/http.dart' as http;
+class APIInfo{
+  final List<Item> items;
+  //List<CarparkData> items = [];
 
+  APIInfo({this.items});
 
-Future <List<CarparkData>> loadCarparkList() async {
-
-  List<CarparkData> _carparkData = [];
-
-  var response = await http.get(Uri.encodeFull("https://api.data.gov.sg/v1/transport/carpark-availability"), headers: {"Accept": "application/json"});
-  var json = await jsonDecode(response.body);
-  APIInfo apiInfo = new APIInfo.fromJson(json);
-
-
-  _carparkData.addAll(apiInfo.items[0].carparkData);
-
-  return _carparkData;
+  factory APIInfo.fromJson(Map<String,dynamic> parsedJson){
+    var list = parsedJson['items'] as List;
+    print(list.runtimeType);
+    List<Item> itemList = list.map((i) => Item.fromJson(i)).toList();
+    //List<CarparkData> carparkdatas = new List();
+    // carparkdatas = list.map((i)=>CarparkData.fromJson(i)).toList();
+    return APIInfo(
+        items: itemList
+    );
+  }
 }
 
-void carparkList() async{
-  List<CarparkData> _carparks = <CarparkData>[];
-  List<String> _total_lots = <String>[];
-  List<String> _av_lots = <String>[];
-  List<String> _carparkID = <String>[];
+class Item{
+  final String timestamp;
+  final List<CarparkData> carparkData;
+
+  Item({this.timestamp,this.carparkData});
+
+  factory Item.fromJson(Map<String,dynamic> parsedJson){
+    var list = parsedJson['carpark_data'] as List;
+    print(list.runtimeType);
+    List<CarparkData> carparkDataList = list.map((i) => CarparkData.fromJson(i)).toList();
+    return Item(
+        timestamp: parsedJson['timestamp'],
+        carparkData: carparkDataList
+    );
+  }
+}
 
 
-  const oneSec = const Duration(seconds: 300);
-  new Timer.periodic(oneSec,(Timer t) async{
-    _total_lots.clear();
-    _av_lots.clear();
-    _carparks.clear();
-    _carparkID.clear();
+class CarparkData{
+  final String carpark_number,updateDatetime;
+  final List<CarparkInfo> carpark_info;
 
-    final List<CarparkData> carparks = await loadCarparkList();
-    _carparks.addAll(carparks);
-    for(int i=0;i<_carparks.length;i++){
-      _total_lots.add(_carparks[i].carpark_info[0].total_lots);
-      _av_lots.add(_carparks[i].carpark_info[0].lots_available);
-      _carparkID.add(_carparks[i].carpark_number);
-    }
+  CarparkData({this.carpark_number,this.updateDatetime,this.carpark_info});
 
-    //print(_carparkID.length);
-    //print(_av_lots.length);
-    //print(_av_lots[0]+'\t'+_av_lots[2]);
-  });
+  factory CarparkData.fromJson(Map<String,dynamic> parsedJson){
+    var list = parsedJson['carpark_info'] as List;
+    print(list.runtimeType);
+    List<CarparkInfo> cpInfoList = list.map((i) => CarparkInfo.fromJson(i)).toList();
+    return CarparkData (
+        carpark_number: parsedJson['carpark_number'] as String,
+        updateDatetime: parsedJson['update_datetime'],
+        carpark_info: cpInfoList
+    );
+  }
+}
+
+
+class CarparkInfo{
+  final String total_lots,lot_type,lots_available;
+  CarparkInfo({this.total_lots,this.lot_type,this.lots_available});
+
+  factory CarparkInfo.fromJson(Map<String,dynamic> parsedJson){
+    return CarparkInfo(
+        total_lots: parsedJson['total_lots'],
+        lot_type: parsedJson['lot_type'],
+        lots_available: parsedJson['lots_available']
+    );
+  }
 }
