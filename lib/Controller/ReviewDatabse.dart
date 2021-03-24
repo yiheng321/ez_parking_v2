@@ -29,27 +29,26 @@ class ReviewDataBase {
   }
 
   initDb() async {
-
     // Construct a file path to copy database to
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
     String path = join(documentsDirectory.path, "review_database.db");
 
     // Only copy if the database doesn't exist
-    if (FileSystemEntity.typeSync(path) == FileSystemEntityType.notFound){
+    if (FileSystemEntity.typeSync(path) == FileSystemEntityType.notFound) {
       // Load database from asset and copy
       ByteData data = await rootBundle.load(join('assets', DB_NAME));
-      List<int> bytes = data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
+      List<int> bytes =
+          data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
 
       // Save copied asset to documents
       await new File(path).writeAsBytes(bytes);
     }
     Directory appDocDir = await getApplicationDocumentsDirectory();
     String databasePath = join(appDocDir.path, 'review_database.db');
-    var db = await openDatabase(databasePath,version: 1);
+    var db = await openDatabase(databasePath, version: 1);
     initialized = true;
     return db;
   }
-
 
   Future<List<Review>> getAllReview() async {
     var dbClient = await db;
@@ -62,9 +61,11 @@ class ReviewDataBase {
     }
     return reviews;
   }
-  Future<Review> getSingaleReviewbyCarparkNo(String carparkNumber) async{
+
+  Future<Review> getSingaleReviewbyCarparkNo(String carparkNumber) async {
     var dbClient = await db;
-    List<Map> maps = await dbClient.rawQuery("SELECT * FROM $TABLE where $carParkNo = $carparkNumber");
+    List<Map> maps = await dbClient
+        .rawQuery("SELECT * FROM $TABLE where $carParkNo = $carparkNumber");
     Review review;
     if (maps.length > 0) {
       for (int i = 0; i < maps.length; i++) {
@@ -74,7 +75,6 @@ class ReviewDataBase {
     }
     return review;
   }
-
 
   Future<int> deleteReviewById(int id) async {
     var dbClient = await db;

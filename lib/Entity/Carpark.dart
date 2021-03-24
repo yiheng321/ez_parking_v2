@@ -1,7 +1,6 @@
 import "package:ezparking/Entity/Review.dart";
 
-
-class Carpark{
+class Carpark {
   int _id;
   String _carParkNo;
   String _address;
@@ -32,8 +31,10 @@ class Carpark{
       this._carParkBasement,
       this._maxSlot,
       this._currentSlot);
-  Carpark.simple(int id, String carParkNo):_id= id, _carParkNo = carParkNo
-  {
+
+  Carpark.simple(int id, String carParkNo)
+      : _id = id,
+        _carParkNo = carParkNo {
     this._address = " ";
     this._xCoord = 0.0;
     this._yCoord = 0.0;
@@ -47,6 +48,7 @@ class Carpark{
     this._maxSlot = 0;
     this._currentSlot = 0;
   }
+
   Carpark.fromMap(Map<String, dynamic> map) {
     _id = map['id'];
     _carParkNo = map['carParkNo'];
@@ -63,6 +65,7 @@ class Carpark{
     _maxSlot = map['maxSlot'];
     _currentSlot = map['currentSlot'];
   }
+
   String get carParkNo => _carParkNo;
 
   set carParkNo(String value) {
@@ -160,6 +163,7 @@ class Carpark{
   set id(int value) {
     _id = value;
   }
+
   Map<String, dynamic> toMap() {
     return {
       'id': _id,
@@ -170,16 +174,12 @@ class Carpark{
       'carParkType': _carParkType,
       'shortTermParking': _shortTermParking,
       'freeParking': _freeParking,
-      'nightParking':_nightParking,
-      'carParkDecks':_carParkDecks,
-      'gantryHeight':_gantryHeight,
-      'carParkBasement':_carParkBasement,
-      'maxSlot':_maxSlot,
+      'nightParking': _nightParking,
+      'carParkDecks': _carParkDecks,
+      'gantryHeight': _gantryHeight,
+      'carParkBasement': _carParkBasement,
+      'maxSlot': _maxSlot,
       'currentSlot': _currentSlot,
     };
   }
-
-
-
-
 }

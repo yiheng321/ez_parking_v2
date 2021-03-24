@@ -15,14 +15,12 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(MyApp());
-
 }
 
 class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
-      home:  LandingPage(auth: Auth()),
+      home: LandingPage(auth: Auth()),
     );
   }
 }
-

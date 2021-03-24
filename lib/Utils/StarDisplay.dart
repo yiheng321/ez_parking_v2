@@ -27,9 +27,9 @@ class StarDisplayWidget extends StatelessWidget {
 class StarDisplay extends StarDisplayWidget {
   const StarDisplay({Key key, int value = 0})
       : super(
-    key: key,
-    value: value,
-    filledStar: const Icon(Icons.star),
-    unfilledStar: const Icon(Icons.star_border),
-  );
+          key: key,
+          value: value,
+          filledStar: const Icon(Icons.star),
+          unfilledStar: const Icon(Icons.star_border),
+        );
 }

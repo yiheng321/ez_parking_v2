@@ -1,14 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
-class Review{
-
+class Review {
   int _id;
   String _carParkNo;
   int _cost;
   int _convenience;
   int _security;
   int _numOfReview;
-
 
   Review.fromMap(Map<String, dynamic> map) {
     _id = map["id"];
@@ -18,12 +16,13 @@ class Review{
     _security = map['security'];
     _numOfReview = map["numOfReview"];
   }
+
   Map<String, dynamic> toMap() {
     var map = <String, dynamic>{
       'id': _id,
       'carParkNo': _carParkNo,
       'cost': _cost,
-      'convenience' : _convenience,
+      'convenience': _convenience,
       'security': _security,
       'numOfReview': _numOfReview,
     };

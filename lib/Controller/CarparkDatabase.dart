@@ -35,27 +35,26 @@ class CarparkDataBase {
   }
 
   initDb() async {
-
     // Construct a file path to copy database to
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
     String path = join(documentsDirectory.path, "carpark_database.db");
 
     // Only copy if the database doesn't exist
-    if (FileSystemEntity.typeSync(path) == FileSystemEntityType.notFound){
+    if (FileSystemEntity.typeSync(path) == FileSystemEntityType.notFound) {
       // Load database from asset and copy
       ByteData data = await rootBundle.load(join('assets', DB_NAME));
-      List<int> bytes = data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
+      List<int> bytes =
+          data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
 
       // Save copied asset to documents
       await new File(path).writeAsBytes(bytes);
     }
     Directory appDocDir = await getApplicationDocumentsDirectory();
     String databasePath = join(appDocDir.path, 'carpark_database.db');
-    var db = await openDatabase(databasePath,version: 1);
+    var db = await openDatabase(databasePath, version: 1);
     initialized = true;
     return db;
   }
-
 
   Future<List<Carpark>> getAllCarpark() async {
     var dbClient = await db;
@@ -70,9 +69,10 @@ class CarparkDataBase {
     return carparks;
   }
 
-  Future<Carpark> getSingaleCarparkbyCarparkNo(String carparkNumber) async{
+  Future<Carpark> getSingaleCarparkbyCarparkNo(String carparkNumber) async {
     var dbClient = await db;
-    List<Map> maps = await dbClient.rawQuery("SELECT * FROM $TABLE where $carParkNo = $carparkNumber");
+    List<Map> maps = await dbClient
+        .rawQuery("SELECT * FROM $TABLE where $carParkNo = $carparkNumber");
     Carpark carpark;
     if (maps.length > 0) {
       for (int i = 0; i < maps.length; i++) {
@@ -83,9 +83,12 @@ class CarparkDataBase {
     return carpark;
   }
 
-  Future<List<Carpark>> getCarparkByRadius(double xmin, double ymin, double xmax, double ymax) async{
+  Future<List<Carpark>> getCarparkByRadius(
+      double xmin, double ymin, double xmax, double ymax) async {
     var dbClient = await db;
-    List<Map> maps = await dbClient.query(TABLE, where: '$xCoord BETWEEN $xmin AND $xmax AND $yCoord BETWEEN $ymin AND $ymax');
+    List<Map> maps = await dbClient.query(TABLE,
+        where:
+            '$xCoord BETWEEN $xmin AND $xmax AND $yCoord BETWEEN $ymin AND $ymax');
     List<Carpark> carparks = [];
     if (maps.length > 0) {
       for (int i = 0; i < maps.length; i++) {
@@ -93,7 +96,6 @@ class CarparkDataBase {
       }
     }
     return carparks;
-    
   }
 
   Future<int> deleteCarparkById(int id) async {

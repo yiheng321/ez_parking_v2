@@ -3,17 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:ezparking/Services/Auth.dart';
 
 class NavDrawer extends StatelessWidget {
-  NavDrawer({Key key, @required this.auth}) : super(key: key){
-    if(auth.currentUser.isAnonymous){
+  NavDrawer({Key key, @required this.auth}) : super(key: key) {
+    if (auth.currentUser.isAnonymous) {
       userName = auth.currentUser.uid;
-    }
-    else{
+    } else {
       userName = auth.currentUser.displayName;
     }
-
   }
+
   final AuthBase auth;
   String userName;
+
   Future<void> _signOut() async {
     try {
       await auth.signOut();
@@ -21,6 +21,7 @@ class NavDrawer extends StatelessWidget {
       print(e.toString());
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -28,23 +29,21 @@ class NavDrawer extends StatelessWidget {
         padding: EdgeInsets.zero,
         children: <Widget>[
           Container(
-            height :100,
+            height: 100,
             child: DrawerHeader(
                 decoration: BoxDecoration(
                     color: Colors.amber.shade300,
                     image: DecorationImage(
                         fit: BoxFit.fitHeight,
-                        image: AssetImage( "assets/user.png"))
-                ),
+                        image: AssetImage("assets/user.png"))),
                 margin: EdgeInsets.all(0.0),
-                padding: EdgeInsets.all(0.0)
-            ),
+                padding: EdgeInsets.all(0.0)),
           ),
           Container(
             padding: EdgeInsets.zero,
             height: 100,
             color: Colors.amber.shade300,
-            child:  Center(child: Text('Current User: '+userName)),
+            child: Center(child: Text('Current User: ' + userName)),
           ),
           ListTile(
             leading: Icon(Icons.border_color),
