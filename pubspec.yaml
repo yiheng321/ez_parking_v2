@@ -49,6 +49,7 @@ dev_dependencies:
   file_picker: ^2.1.7
   csv: ^4.0.1
   path_provider: ^2.0.1
+  http: ^0.11.0
 
 
 # The following section is specific to Flutter.
