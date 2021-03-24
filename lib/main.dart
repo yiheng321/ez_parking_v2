@@ -11,11 +11,6 @@ import 'package:ezparking/Entity/Carpark.dart';
 import 'dart:async';
 import 'package:ezparking/Controller/CarparkDatabase.dart';
 
-Future<List> _loadCSV() async {
-  final _rawData = await rootBundle.loadString("assets/hdb-carpark-information.csv");
-  List<List<dynamic>> _listData = CsvToListConverter().convert(_rawData);
-  return _listData;
-}
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();

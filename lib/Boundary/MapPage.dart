@@ -2,6 +2,8 @@ import 'package:ezparking/Services/Auth.dart';
 import 'package:location/location.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:ezparking/Utils/NavDrawer.dart';
+
 
 class MapPage extends StatelessWidget{
   MapPage({Key key, @required this.auth}) : super(key: key);
@@ -32,20 +34,11 @@ class MapPage extends StatelessWidget{
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
+        drawer: NavDrawer(auth: auth),
         appBar: AppBar(
           title: Text('Car parks'),
           backgroundColor: Colors.amber.shade300,
           actions: <Widget>[
-            FlatButton(
-              child: Text(
-                'Logout',
-                style: TextStyle(
-                  fontSize: 18.0,
-                  color: Colors.white,
-                ),
-              ),
-              onPressed: _signOut,
-            ),
           ],
         ),
         body: GoogleMap(
