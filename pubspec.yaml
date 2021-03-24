@@ -52,6 +52,7 @@ dev_dependencies:
   http: ^0.11.0
   flutter_google_places: ^0.2.8
   google_maps_webservice: ^0.0.19
+  geocoder: ^0.2.1
 
 
 # The following section is specific to Flutter.
