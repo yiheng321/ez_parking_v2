@@ -1,11 +1,12 @@
 import 'package:ezparking/Services/Auth.dart';
 import 'package:location/location.dart' as LocationManager;
-import 'package:flutter_google_places/flutter_google_places.dart';
+//import 'package:flutter_google_places/flutter_google_places.dart';
 import 'package:google_maps_webservice/places.dart';
 import 'package:ezparking/Boundary/SearchPage.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:ezparking/Utils/NavDrawer.dart';
+import 'package:ezparking/Boundary/SearchPlacePage.dart';
 
 const kGoogleApiKey = "AIzaSyAzedSahYVFaCTK3_YP19NYYd9_mW3EI5A";
 GoogleMapsPlaces _places = GoogleMapsPlaces(apiKey: kGoogleApiKey);
@@ -32,21 +33,9 @@ class MapPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
+        extendBodyBehindAppBar: true,
         drawer: NavDrawer(auth: auth),
-        appBar: AppBar(
-          title: Text('Car parks'),
-          backgroundColor: Colors.amber.shade300,
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(Icons.search),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => SearchPage()),
-                );
-              },)
-          ],
-        ),
+        appBar: FloatAppBar(),
         body: GoogleMap(
           initialCameraPosition: CameraPosition(target: _initialcameraposition),
           mapType: MapType.normal,
