@@ -1,13 +1,13 @@
-import 'package:flutter_google_places/flutter_google_places.dart';
-import 'package:google_maps_webservice/places.dart';
-import 'package:geocoder/geocoder.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:flutter/material.dart';
-const kGoogleApiKey = "AIzaSyAzedSahYVFaCTK3_YP19NYYd9_mW3EI5A";
+//import 'package:flutter_google_places/flutter_google_places.dart';
+//import 'package:google_maps_webservice/places.dart';
+//import 'package:geocoder/geocoder.dart';
+//import 'package:google_maps_flutter/google_maps_flutter.dart';
+//import 'package:flutter/material.dart';
+//const kGoogleApiKey = "AIzaSyAzedSahYVFaCTK3_YP19NYYd9_mW3EI5A";
 
-GoogleMapsPlaces _places = GoogleMapsPlaces(apiKey: kGoogleApiKey);
+//GoogleMapsPlaces _places = GoogleMapsPlaces(apiKey: kGoogleApiKey);
 
-
+/*
 class SearchPage extends StatefulWidget {
   @override
   SearchPageState createState() => new SearchPageState();
@@ -50,4 +50,4 @@ class SearchPageState extends State<SearchPage> {
       print(lng);
     }
   }
-}
+}*/
