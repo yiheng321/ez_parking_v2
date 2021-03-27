@@ -50,11 +50,9 @@ class PlaceApiProvider {
         'https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$input&language=$lang&components=country:sg&key=$apiKey&sessiontoken=$sessionToken';
     final response = await client.get(request);
 
-
     if (response.statusCode == 200) {
       final result = json.decode(response.body);
       if (result['status'] == 'OK') {
-
         return result['predictions']
             .map<Suggestion>((p) => Suggestion(p['place_id'], p['description']))
             .toList();
@@ -77,7 +75,7 @@ class PlaceApiProvider {
       final result = json.decode(response.body);
       if (result['status'] == 'OK') {
         final components =
-        result['result']['address_components'] as List<dynamic>;
+            result['result']['address_components'] as List<dynamic>;
         // build result
         final place = Place();
         components.forEach((c) {
@@ -102,13 +100,10 @@ class PlaceApiProvider {
       throw Exception('Failed to fetch suggestion');
     }
   }
-
-
 }
 
-void getCoordinates(String searchTerm) async{
+void getCoordinates(String searchTerm) async {
   List<Location> locations = await locationFromAddress(searchTerm);
   print(locations[0].latitude);
   print(locations[0].longitude);
-
 }
