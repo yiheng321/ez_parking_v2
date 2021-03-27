@@ -1,6 +1,6 @@
 import 'dart:async' show Future, Timer;
 import 'dart:convert';
-import 'package:ezparking/Model/CarparkInfo.dart';
+import 'package:ezparking/Entity/CarparkInfo.dart';
 import 'package:http/http.dart' as http;
 
 Future<List<CarparkData>> loadCarparkList() async {
