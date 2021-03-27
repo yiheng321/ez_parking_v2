@@ -72,19 +72,6 @@ class Carpark {
     _carParkNo = value;
   }
 
-  // List get review => _review;
-  //
-  // set review(List<Review> value) {
-  //   _review = value;
-  // }
-  //
-  // void addReview(Review review){
-  //   _review.add(review);
-  // }
-  //
-  // void deleteReview(Review review){
-  //   _review.remove(review);
-  // }
 
   int get currentSlot => _currentSlot;
 

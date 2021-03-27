@@ -39,8 +39,5 @@ void carparkList() async {
       _carparkID.add(_carparks[i].carpark_number);
     }
 
-    //print(_carparkID.length);
-    //print(_av_lots.length);
-    //print(_av_lots[0]+'\t'+_av_lots[2]);
   });
 }

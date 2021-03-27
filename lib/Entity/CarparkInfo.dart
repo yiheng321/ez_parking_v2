@@ -1,8 +1,6 @@
 class APIInfo {
   final List<Item> items;
 
-  //List<CarparkData> items = [];
-
   APIInfo({this.items});
 
   factory APIInfo.fromJson(Map<String, dynamic> parsedJson) {
