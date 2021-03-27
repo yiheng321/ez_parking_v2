@@ -6,8 +6,9 @@ class NavDrawer extends StatelessWidget {
   NavDrawer({Key key, @required this.auth}) : super(key: key) {
     if (auth.currentUser.isAnonymous) {
       userName = auth.currentUser.uid;
-    } else {
-      userName = auth.currentUser.displayName;
+    }
+      else {
+      userName = auth.currentUser.email;
     }
   }
 

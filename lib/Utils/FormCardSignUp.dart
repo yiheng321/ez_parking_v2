@@ -5,7 +5,7 @@ import 'package:ezparking/Services/Validation.dart';
 import 'package:ezparking/Boundary/LoginPage.dart';
 
 
-String username,password;
+String username,password,confpassword;
 GlobalKey<FormState> formKey = GlobalKey<FormState>();
 TextEditingController userNameController = new TextEditingController();
 TextEditingController passwordController = new TextEditingController();
@@ -13,14 +13,14 @@ TextEditingController confirmpasswordController = new TextEditingController();
 
 
 
-class FormCard extends StatelessWidget {
+class FormCard_signup extends StatelessWidget {
 
   static const Map <String,String> Pages = {'login':"Login", 'signup': "Sign Up"};
 
   String PageName;
   double Height;
 
-  FormCard(String page){
+  FormCard_signup(String page){
     this.PageName = Pages [page];
   }
 
@@ -73,7 +73,7 @@ class FormCard extends StatelessWidget {
 
                   ),
                   keyboardType: TextInputType.text,
-                  validator: Validation().validateUserName,
+                  validator: Validation().validatePassWord,
 
                   onSaved: (String value){
                     username = value;
@@ -94,11 +94,25 @@ class FormCard extends StatelessWidget {
                   },
                 ),
 
+                TextFormField(
+                  controller: confirmpasswordController,
+                  decoration: InputDecoration(labelText: 'Confirm PassWord',
+                    icon: Icon(Icons.lock),
+                    suffixIcon:(true) ? IconButton(
+                      icon: Icon(Icons.clear),
+                      onPressed: (){confirmpasswordController.clear();},) : null ,),
+                  obscureText: true,
+                  validator: Validation().validateConfirmPassWord,
+                  onSaved: (String value)
+                  {
+                    confpassword = value;
+                  },
 
-                SizedBox(
-                  height: ScreenUtil.getInstance().setHeight(10),
+                ),
 
-                )
+
+
+
 
               ],
             ),
