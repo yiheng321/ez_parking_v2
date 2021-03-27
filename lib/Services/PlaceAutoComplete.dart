@@ -108,7 +108,6 @@ class PlaceApiProvider {
 
 void getCoordinates(String searchTerm) async{
   List<Location> locations = await locationFromAddress(searchTerm);
-  print('YOYOYOYOYOYOYOYOYOYYYOYOYOYOYOYOYOYOYOYYYOYOYOYOYOYOYOYOYOYY');
   print(locations[0].latitude);
   print(locations[0].longitude);
 

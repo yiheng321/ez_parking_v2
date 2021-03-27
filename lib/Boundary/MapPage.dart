@@ -1,8 +1,6 @@
 import 'package:ezparking/Services/Auth.dart';
 import 'package:location/location.dart' as LocationManager;
-//import 'package:flutter_google_places/flutter_google_places.dart';
 import 'package:google_maps_webservice/places.dart';
-import 'package:ezparking/Boundary/SearchPage.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:ezparking/Utils/NavDrawer.dart';
@@ -32,17 +30,35 @@ class MapPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+        primaryColor: Colors.amber.shade300,
+      ),
       home: Scaffold(
         extendBodyBehindAppBar: true,
-        drawer: NavDrawer(auth: auth),
-        appBar: FloatAppBar(),
-        body: GoogleMap(
-          initialCameraPosition: CameraPosition(target: _initialcameraposition),
-          mapType: MapType.normal,
-          onMapCreated: _onMapCreated,
-          myLocationEnabled: true,
-
+        appBar: PreferredSize(
+            preferredSize: Size.fromHeight(32), // here the desired height
+            child: AppBar(
+            )
         ),
+        drawer: NavDrawer(auth: auth),
+        // appBar: FloatAppBar(),
+        body: Stack(
+            children: <Widget>[
+
+            Container(
+              child: GoogleMap(
+                initialCameraPosition: CameraPosition(target: _initialcameraposition),
+                mapType: MapType.normal,
+                onMapCreated: _onMapCreated,
+                myLocationEnabled: true,
+
+              ),
+            ),
+
+            FloatAppBar(),
+            ]
+        ),
+
       ),);
   }
 }
