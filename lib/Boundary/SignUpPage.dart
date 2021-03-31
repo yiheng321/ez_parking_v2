@@ -154,7 +154,6 @@ class SignUpPage extends StatelessWidget  {
                                               showDialog(
                                                 context: context,
                                                 builder: (BuildContext context) => Popwindow().Popupwindow(context,'sign up',Validation().validateSignin()),
-                                                // builder: (BuildContext context) => .  (context,'Sign Up', Validation().validateSignin()),
                                               );
                                             } );
 

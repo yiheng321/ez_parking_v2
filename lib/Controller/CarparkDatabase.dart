@@ -72,7 +72,7 @@ class CarparkDataBase {
   Future<Carpark> getSingaleCarparkbyCarparkNo(String carparkNumber) async {
     var dbClient = await db;
     List<Map> maps = await dbClient
-        .rawQuery("SELECT * FROM $TABLE where $carParkNo = $carparkNumber");
+        .rawQuery("SELECT * FROM $TABLE where $carParkNo = $carparkNumber Limit 1");
     Carpark carpark;
     if (maps.length > 0) {
       for (int i = 0; i < maps.length; i++) {
@@ -107,6 +107,10 @@ class CarparkDataBase {
     var dbClient = await db;
     return await dbClient.update(TABLE, carpark.toMap(),
         where: '$id = ?', whereArgs: [carpark.id]);
+  }
+  Future<int> updateCarParkSlotbyID(String updateCarparkNumber, int updateCurrentSlot) async {
+    var dbClient = await db;
+    return await dbClient.rawUpdate('UPDATE $TABLE SET $currentSlot = ? WHERE $carParkNo = ?' ,[updateCurrentSlot,updateCarparkNumber]);
   }
 
   Future close() async {
