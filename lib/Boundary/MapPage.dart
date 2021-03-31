@@ -1,6 +1,7 @@
+import 'package:ezparking/Controller/CarparkDatabase.dart';
+import 'package:ezparking/Services/ApiService.dart';
 import 'package:ezparking/Services/Auth.dart';
 import 'package:location/location.dart' as LocationManager;
-import 'package:google_maps_webservice/places.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:ezparking/Utils/NavDrawer.dart';
@@ -9,25 +10,69 @@ import 'package:uuid/uuid.dart';
 import 'package:ezparking/Services/PlaceAutoComplete.dart';
 
 const kGoogleApiKey = "AIzaSyAzedSahYVFaCTK3_YP19NYYd9_mW3EI5A";
-GoogleMapsPlaces _places = GoogleMapsPlaces(apiKey: kGoogleApiKey);
 
-class MapPage extends StatelessWidget {
+class MapPage extends StatefulWidget {
   MapPage({Key key, @required this.auth}) : super(key: key);
+  @override
+  _MapPageState createState() => _MapPageState();
   final AuthBase auth;
-  final _controller = TextEditingController();
+  final _textController = TextEditingController();
+}
 
+class _MapPageState extends State<MapPage> {
   GoogleMapController mapController;
   LatLng _initialcameraposition = LatLng(1.282302, 103.858528);
   final _location = LocationManager.Location();
+  Set<Marker> _markers = {};
+  BitmapDescriptor mapMarker;
 
-  void _onMapCreated(GoogleMapController _cntlr) {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  void addMarker(LatLng mLatLng) async {
+    // await loadCarparkList();
+    double radius = 1;
+    var xmin = mLatLng.latitude - radius/101;
+    var ymin = mLatLng.longitude  - radius/101;
+    var xmax = mLatLng.latitude + radius/101;
+    var ymax = mLatLng.longitude  + radius/101;
+    var carparkDB = CarparkDataBase();
+    var carparks = await carparkDB.getCarparkByRadius(xmin, ymin, xmax, ymax);
+    setState(() {
+      for (var carpark in carparks) {
+        print(carpark.carParkNo);
+        _markers.add(
+          Marker(
+            markerId: MarkerId(carpark.carParkNo),
+            position: LatLng(carpark.xCoord, carpark.yCoord),
+            icon: mapMarker,
+            infoWindow: InfoWindow(
+              title: carpark.currentSlot.toString() + "/" + carpark.maxSlot.toString(),
+              snippet: carpark.address,
+            ),
+          ),
+        );
+      }
+    });
+  }
+
+  // LatLng utmToLatLon(double x, double y)
+  // {
+  //   var utm1 = UTM.fromUtm(easting: x, northing: y, zoneNumber: 48, zoneLetter: "N");
+  //   return LatLng(utm1.lat, utm1.lon);
+  // }
+  void _onMapCreated(GoogleMapController _cntlr) async {
     mapController = _cntlr;
-    _location.onLocationChanged.listen((l) {
+    _location.onLocationChanged.listen((l) async {
       mapController.animateCamera(
         CameraUpdate.newCameraPosition(
           CameraPosition(target: LatLng(l.latitude, l.longitude), zoom: 15),
         ),
       );
+      addMarker(LatLng(l.latitude, l.longitude));
     });
   }
 
@@ -42,7 +87,7 @@ class MapPage extends StatelessWidget {
         appBar: PreferredSize(
             preferredSize: Size.fromHeight(32), // here the desired height
             child: AppBar()),
-        drawer: NavDrawer(auth: auth),
+        drawer: NavDrawer(auth: widget.auth),
         // appBar: FloatAppBar(),
         body: Stack(children: <Widget>[
           Container(
@@ -52,6 +97,7 @@ class MapPage extends StatelessWidget {
               mapType: MapType.normal,
               onMapCreated: _onMapCreated,
               myLocationEnabled: true,
+              markers: _markers,
             ),
           ),
           Positioned(
@@ -76,7 +122,7 @@ class MapPage extends StatelessWidget {
                         primaryColorDark: Colors.grey),
                     child: new TextField(
                       style: TextStyle(fontSize: 15),
-                      controller: _controller,
+                      controller: widget._textController,
                       readOnly: true,
                       onTap: () async {
                         // generate a new token here
@@ -90,9 +136,9 @@ class MapPage extends StatelessWidget {
                           final placeDetails =
                               await PlaceApiProvider(sessionToken)
                                   .getPlaceDetailFromId(result.placeId);
-                          _controller.text = result.description;
-                          print(_controller.text);
-                          getCoordinates(_controller.text);
+                          widget._textController.text = result.description;
+                          print(widget._textController.text);
+                          getCoordinates(widget._textController.text);
                         }
                       },
                       decoration: new InputDecoration(

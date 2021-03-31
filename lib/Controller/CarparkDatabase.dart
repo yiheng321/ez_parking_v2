@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:ezparking/Services/ApiService.dart';
 import 'package:ezparking/Entity/Carpark.dart';
 
 class CarparkDataBase {
@@ -37,7 +38,7 @@ class CarparkDataBase {
   initDb() async {
     // Construct a file path to copy database to
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
-    String path = join(documentsDirectory.path, "carpark_database.db");
+    String path = join(documentsDirectory.path, "carpark_data.db");
 
     // Only copy if the database doesn't exist
     if (FileSystemEntity.typeSync(path) == FileSystemEntityType.notFound) {
@@ -50,7 +51,7 @@ class CarparkDataBase {
       await new File(path).writeAsBytes(bytes);
     }
     Directory appDocDir = await getApplicationDocumentsDirectory();
-    String databasePath = join(appDocDir.path, 'carpark_database.db');
+    String databasePath = join(appDocDir.path, 'carpark_data.db');
     var db = await openDatabase(databasePath, version: 1);
     initialized = true;
     return db;

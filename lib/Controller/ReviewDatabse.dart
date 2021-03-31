@@ -31,7 +31,7 @@ class ReviewDataBase {
   initDb() async {
     // Construct a file path to copy database to
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
-    String path = join(documentsDirectory.path, "review_database.db");
+    String path = join(documentsDirectory.path, "review_data.db");
 
     // Only copy if the database doesn't exist
     if (FileSystemEntity.typeSync(path) == FileSystemEntityType.notFound) {
@@ -44,7 +44,7 @@ class ReviewDataBase {
       await new File(path).writeAsBytes(bytes);
     }
     Directory appDocDir = await getApplicationDocumentsDirectory();
-    String databasePath = join(appDocDir.path, 'review_database.db');
+    String databasePath = join(appDocDir.path, 'review_data.db');
     var db = await openDatabase(databasePath, version: 1);
     initialized = true;
     return db;
