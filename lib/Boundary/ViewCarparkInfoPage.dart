@@ -5,7 +5,7 @@ import 'package:smooth_star_rating/smooth_star_rating.dart';
 import 'package:ezparking/Entity/Carpark.dart';
 import 'package:ezparking/Entity/Review.dart';
 import 'package:map_launcher/map_launcher.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'dart:math';
 
 class CarparkInfoPage extends StatefulWidget {
@@ -245,10 +245,10 @@ class _CarparkInfoPageState extends State<CarparkInfoPage> {
                                                 destinationTitle:
                                                     widget.carpark.address),
                                             title: Text(map.mapName),
-                                            leading: SvgPicture.asset(
-                                              map.icon,
-                                              height: 30.0,
-                                              width: 30.0,
+                                            leading: Image(
+                                              width: 32,
+                                              height: 32,
+                                              image: Svg(map.icon),
                                             ),
                                           ),
                                       ],
