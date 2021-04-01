@@ -15,7 +15,9 @@ class ReviewDataBase {
   static const String cost = 'cost';
   static const String convenience = 'convenience';
   static const String security = 'security';
-  static const String numOfReview = 'numOfReview';
+  static const String numOfReviewCost = 'numOfReviewCost';
+  static const String numOfReviewConvenience = 'numOfReviewConvenience';
+  static const String numOfReviewSecurity = 'numOfReviewSecurity';
   static const String TABLE = 'Review';
   static const String DB_NAME = 'Review.db';
   static bool initialized;
@@ -31,7 +33,7 @@ class ReviewDataBase {
   initDb() async {
     // Construct a file path to copy database to
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
-    String path = join(documentsDirectory.path, "review_data.db");
+    String path = join(documentsDirectory.path, "review_db.db");
 
     // Only copy if the database doesn't exist
     if (FileSystemEntity.typeSync(path) == FileSystemEntityType.notFound) {
@@ -44,7 +46,7 @@ class ReviewDataBase {
       await new File(path).writeAsBytes(bytes);
     }
     Directory appDocDir = await getApplicationDocumentsDirectory();
-    String databasePath = join(appDocDir.path, 'review_data.db');
+    String databasePath = join(appDocDir.path, 'review_db.db');
     var db = await openDatabase(databasePath, version: 1);
     initialized = true;
     return db;

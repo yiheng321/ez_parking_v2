@@ -1,62 +1,44 @@
-import 'package:ezparking/Services/Auth.dart';
-import 'package:ezparking/Utils/NavDrawer.dart';
+import 'package:ezparking/Controller/ReviewDatabse.dart';
 import 'package:ezparking/Utils/StarDisplay.dart';
 import 'package:flutter/material.dart';
-
+import 'package:smooth_star_rating/smooth_star_rating.dart';
 import 'package:ezparking/Entity/Carpark.dart';
 import 'package:ezparking/Entity/Review.dart';
 
-import 'package:ezparking/Entity/Carpark.dart';
-
-Column buildButtonColumn(
-    Color color, IconData icon, String label, VoidCallback onPress) {
-  return Column(
-    mainAxisSize: MainAxisSize.min,
-    mainAxisAlignment: MainAxisAlignment.center,
-    children: [
-      IconButton(icon: Icon(icon), color: color, onPressed: onPress),
-      Container(
-        margin: const EdgeInsets.only(top: 0),
-        child: Text(
-          label,
-          style: TextStyle(
-            fontSize: 12,
-            fontWeight: FontWeight.w400,
-            color: color,
-          ),
-        ),
-      ),
-    ],
-  );
-}
-
-class CarparkInfoPage extends StatelessWidget {
-  CarparkInfoPage(
-      {Key key,
-      @required this.carpark,
-      @required this.review})
+class CarparkInfoPage extends StatefulWidget {
+  @override
+  CarparkInfoPage({Key key, @required this.carpark, @required this.review})
       : super(key: key);
   final Carpark carpark;
   final Review review;
+  _CarparkInfoPageState createState() => _CarparkInfoPageState();
+}
 
+class _CarparkInfoPageState extends State<CarparkInfoPage> {
+  var reviewDB = ReviewDataBase();
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
           appBar: AppBar(
-            title: Text('Carpark Infomation'),
-            backgroundColor: Colors.amber.shade300,
-              leading: IconButton(icon:Icon(Icons.arrow_back),
+              title: Text('Carpark Infomation'),
+              backgroundColor: Colors.amber.shade300,
+              leading: IconButton(
+                icon: Icon(Icons.arrow_back),
                 //onPressed:() => Navigator.pop(context, false),
-                onPressed:() => Navigator.of(context).pop(),
-              )
-          ),
+                onPressed: () => Navigator.of(context).pop(),
+              )),
           body: SingleChildScrollView(
             child: Column(
               children: <Widget>[
                 titleSection(
                   "Carpark Number",
-                  carpark.carParkNo,
+                  widget.carpark.carParkNo,
                   Icon(
                     Icons.car_rental,
                     color: Colors.red[500],
@@ -64,7 +46,7 @@ class CarparkInfoPage extends StatelessWidget {
                 ),
                 titleSection(
                   "Carpark address",
-                  carpark.address,
+                  widget.carpark.address,
                   Icon(
                     Icons.home,
                     color: Colors.red[500],
@@ -90,7 +72,7 @@ class CarparkInfoPage extends StatelessWidget {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                Text(carpark.currentSlot.toString(),
+                                Text(widget.carpark.currentSlot.toString(),
                                     style: TextStyle(fontSize: 20)),
                               ],
                             ),
@@ -113,30 +95,8 @@ class CarparkInfoPage extends StatelessWidget {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                Text(carpark.maxSlot.toString(),
+                                Text(widget.carpark.maxSlot.toString(),
                                     style: TextStyle(fontSize: 20)),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                      Column(
-                        children: [
-                          Container(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Text("Distance",
-                                    style: TextStyle(fontSize: 10)),
-                              ],
-                            ),
-                          ),
-                          Container(
-                            margin: const EdgeInsets.only(top: 5),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Text("0.45km", style: TextStyle(fontSize: 20)),
                               ],
                             ),
                           ),
@@ -147,7 +107,7 @@ class CarparkInfoPage extends StatelessWidget {
                 ),
                 titleSection(
                   "Carpark Type",
-                  carpark.carParkType,
+                  widget.carpark.carParkType,
                   Icon(
                     Icons.merge_type,
                     color: Colors.red[500],
@@ -155,7 +115,7 @@ class CarparkInfoPage extends StatelessWidget {
                 ),
                 titleSection(
                   "Short Term Parking",
-                  carpark.shortTermParking,
+                  widget.carpark.shortTermParking,
                   Icon(
                     Icons.terrain,
                     color: Colors.red[500],
@@ -163,7 +123,7 @@ class CarparkInfoPage extends StatelessWidget {
                 ),
                 titleSection(
                   "Free Parking",
-                  carpark.freeParking,
+                  widget.carpark.freeParking,
                   Icon(
                     Icons.money_off,
                     color: Colors.red[500],
@@ -171,7 +131,7 @@ class CarparkInfoPage extends StatelessWidget {
                 ),
                 titleSection(
                   "Night Parking",
-                  carpark.nightParking,
+                  widget.carpark.nightParking,
                   Icon(
                     Icons.nightlight_round,
                     color: Colors.red[500],
@@ -179,7 +139,7 @@ class CarparkInfoPage extends StatelessWidget {
                 ),
                 titleSection(
                   "Carpark Decks",
-                  carpark.carParkDecks.toString() + " layers",
+                  widget.carpark.carParkDecks.toString() + " layers",
                   Icon(
                     Icons.stairs_rounded,
                     color: Colors.red[500],
@@ -187,7 +147,7 @@ class CarparkInfoPage extends StatelessWidget {
                 ),
                 titleSection(
                   "Gantry height",
-                  carpark.gantryHeight.toString() + "m",
+                  widget.carpark.gantryHeight.toString() + "m",
                   Icon(
                     Icons.height,
                     color: Colors.red[500],
@@ -195,18 +155,18 @@ class CarparkInfoPage extends StatelessWidget {
                 ),
                 titleSection(
                   "Carpark basement",
-                  carpark.carParkBasement,
+                  widget.carpark.carParkBasement,
                   Icon(
                     Icons.stairs_sharp,
                     color: Colors.red[500],
                   ),
                 ),
                 titleSection(
-                    "Review", "Security", buildStarReview(review.cost)),
+                    "Review", "Cost", buildStarReview(widget.review.cost, "Cost")),
                 titleSection("Review", "Convenience",
-                    buildStarReview(review.convenience)),
-                titleSection(
-                    "Review", "Security", buildStarReview(review.security)),
+                    buildStarReview(widget.review.convenience, "Convenience")),
+                titleSection("Review", "Security",
+                    buildStarReview(widget.review.security, "Security")),
                 Container(
                   padding: const EdgeInsets.only(top: 15),
                   child: Row(
@@ -263,13 +223,57 @@ class CarparkInfoPage extends StatelessWidget {
     );
   }
 
-  Widget buildStarReview(int mark) {
-    return IconTheme(
-      data: IconThemeData(
-        color: Colors.amber,
-        size: 15,
-      ),
-      child: StarDisplay(value: mark),
+  Widget buildStarReview(int mark, String reviewType) {
+    return  SmoothStarRating(
+          allowHalfRating: false,
+          onRated: (v) async{
+            if(reviewType == "Cost"){
+              int total = widget.review.cost * widget.review.numOfReviewCost;
+              widget.review.numOfReviewCost++;
+              widget.review.cost = ((total +v.toInt()) / widget.review.numOfReviewCost).toInt();
+              reviewDB.updateReviewById(widget.review);
+            }
+            if(reviewType == "Convenience"){
+              int total = widget.review.convenience * widget.review.numOfReviewConvenience;
+              widget.review.numOfReviewConvenience++;
+              widget.review.convenience = ((total +v.toInt()) / widget.review.numOfReviewConvenience).toInt();
+              reviewDB.updateReviewById(widget.review);
+            }
+            if(reviewType == "Security"){
+              int total = widget.review.security * widget.review.numOfReviewSecurity;
+              widget.review.numOfReviewSecurity++;
+              widget.review.security = ((total +v.toInt()) / widget.review.numOfReviewSecurity).toInt();
+              reviewDB.updateReviewById(widget.review);
+            }
+          },
+          starCount: 5,
+          rating: mark.toDouble(),
+          size: 40.0,
+          isReadOnly: false,
+          color: Colors.amber.shade300,
+          borderColor: Colors.amber.shade300,
+          spacing: 0.0);
+  }
+
+  Column buildButtonColumn(
+      Color color, IconData icon, String label, VoidCallback onPress) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        IconButton(icon: Icon(icon), color: color, onPressed: onPress),
+        Container(
+          margin: const EdgeInsets.only(top: 0),
+          child: Text(
+            label,
+            style: TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.w400,
+              color: color,
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

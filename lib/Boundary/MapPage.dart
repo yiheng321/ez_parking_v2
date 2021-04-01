@@ -53,6 +53,7 @@ class _MapPageState extends State<MapPage> {
   final Uint8List markerIcon3 = await getBytesFromAsset('assets/yellow-dot.png', 100);
   _carparkYellowIcon = BitmapDescriptor.fromBytes(markerIcon3);
   }
+
   void setInitialLocation() async {
     // set the initial location by pulling the user's
     // current location from the location's getLocation()
@@ -90,8 +91,8 @@ class _MapPageState extends State<MapPage> {
                 position: LatLng(carpark.xCoord, carpark.yCoord),
                 icon: _carparkRedIcon,
                 infoWindow: InfoWindow(
-                  title: carpark.currentSlot.toString() +
-                      "/" +
+                  title: "Current Slot: "+carpark.currentSlot.toString() +
+                      " Total Slot: "+
                       carpark.maxSlot.toString(),
                   snippet: carpark.address,
                 ),
@@ -109,8 +110,8 @@ class _MapPageState extends State<MapPage> {
                 position: LatLng(carpark.xCoord, carpark.yCoord),
                 icon: _carparkYellowIcon,
                 infoWindow: InfoWindow(
-                  title: carpark.currentSlot.toString() +
-                      "/" +
+                  title: "Current Slot: "+carpark.currentSlot.toString() +
+                      " Total Slot: "+
                       carpark.maxSlot.toString(),
                   snippet: carpark.address,
                 ),
@@ -128,8 +129,8 @@ class _MapPageState extends State<MapPage> {
                 position: LatLng(carpark.xCoord, carpark.yCoord),
                 icon: _carparkGreenIcon,
                 infoWindow: InfoWindow(
-                  title: carpark.currentSlot.toString() +
-                      "/" +
+                  title: "Current Slot: "+carpark.currentSlot.toString() +
+                      " Total Slot: "+
                       carpark.maxSlot.toString(),
                   snippet: carpark.address,
                 ),
