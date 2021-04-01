@@ -32,6 +32,7 @@ class _MapPageState extends State<MapPage> {
   BitmapDescriptor _carparkRedIcon;
   BitmapDescriptor _carparkYellowIcon;
   BitmapDescriptor _carparkGreenIcon;
+  BitmapDescriptor _blueIcon;
 
 
   @override
@@ -51,6 +52,8 @@ class _MapPageState extends State<MapPage> {
   _carparkGreenIcon = BitmapDescriptor.fromBytes(markerIcon2);
   final Uint8List markerIcon3 = await getBytesFromAsset('assets/yellow-dot.png', 100);
   _carparkYellowIcon = BitmapDescriptor.fromBytes(markerIcon3);
+  final Uint8List markerIcon4 = await getBytesFromAsset('assets/blue-dot.png', 100);
+  _blueIcon = BitmapDescriptor.fromBytes(markerIcon4);
   }
 
   void setInitialLocation() async {
@@ -82,6 +85,12 @@ class _MapPageState extends State<MapPage> {
     var carparks = await carparkDB.getCarparkByRadius(xmin, ymin, xmax, ymax);
     if(_initialcameraposition != null){
       setState(() {
+        _markers.add(
+            Marker(
+                markerId: MarkerId("Current Position"),
+                position: _initialcameraposition,
+                icon: _blueIcon,
+        ));
         for (var carpark in carparks) {
           print(carpark.carParkNo);
           if(carpark.currentSlot <=10){

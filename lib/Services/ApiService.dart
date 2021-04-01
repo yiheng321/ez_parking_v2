@@ -14,14 +14,11 @@ void loadCarparkList() async {
   if (response.statusCode == 200) {
     var jsonBody = await jsonDecode(response.body) as Map;
     for (var obj in jsonBody["items"][0]["carpark_data"]) {
-      // carparkDB.updateCarParkSlotbyID(obj["carpark_number"],
-      //     int.parse(obj["carpark_info"][0]["lots_available"]));
       firstList.add(obj["carpark_number"]);
       secondList.add(int.parse(obj["carpark_info"][0]["lots_available"]));
     }
     Map map = Map.fromIterables(firstList, secondList);
     carparkDB.updateCarParkSlotbyID(map);
-
   }
 }
 
