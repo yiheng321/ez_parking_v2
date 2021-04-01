@@ -108,9 +108,14 @@ class CarparkDataBase {
     return await dbClient.update(TABLE, carpark.toMap(),
         where: '$id = ?', whereArgs: [carpark.id]);
   }
-  Future<int> updateCarParkSlotbyID(String updateCarparkNumber, int updateCurrentSlot) async {
+  Future<List> updateCarParkSlotbyID(Map<String, int> map) async {
     var dbClient = await db;
-    return await dbClient.rawUpdate('UPDATE $TABLE SET $currentSlot = ? WHERE $carParkNo = ?' ,[updateCurrentSlot,updateCarparkNumber]);
+    var batch = dbClient.batch();
+    map.forEach((key, value) {
+      batch.update(TABLE, {currentSlot : value}, where: '$carParkNo = ?', whereArgs: [key]);
+    });
+
+    return await batch.commit(noResult: true);
   }
 
   Future close() async {
