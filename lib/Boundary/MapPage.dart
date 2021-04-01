@@ -81,69 +81,72 @@ class _MapPageState extends State<MapPage> {
     var carparkDB = CarparkDataBase();
     var reviewDB = ReviewDataBase();
     var carparks = await carparkDB.getCarparkByRadius(xmin, ymin, xmax, ymax);
-    setState(() {
-      for (var carpark in carparks) {
-        print(carpark.carParkNo);
-        if(carpark.currentSlot <=10){
-          _markers.add(
-            Marker(
-                markerId: MarkerId(carpark.carParkNo),
-                position: LatLng(carpark.xCoord, carpark.yCoord),
-                icon: _carparkRedIcon,
-                infoWindow: InfoWindow(
-                  title: "Current Slot: "+carpark.currentSlot.toString() +
-                      " Total Slot: "+
-                      carpark.maxSlot.toString(),
-                  snippet: carpark.address,
-                ),
-                onTap: () async{
-                  var review = await reviewDB.getSingaleReviewbyCarparkNo(carpark.carParkNo);
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=> (CarparkInfoPage(carpark: carpark, review: review))));
-                }
-            ),
-          );
-        }
-        else if(carpark.currentSlot>10 && carpark.currentSlot <=30){
-          _markers.add(
-            Marker(
-                markerId: MarkerId(carpark.carParkNo),
-                position: LatLng(carpark.xCoord, carpark.yCoord),
-                icon: _carparkYellowIcon,
-                infoWindow: InfoWindow(
-                  title: "Current Slot: "+carpark.currentSlot.toString() +
-                      " Total Slot: "+
-                      carpark.maxSlot.toString(),
-                  snippet: carpark.address,
-                ),
-                onTap: () async{
-                  var review = await reviewDB.getSingaleReviewbyCarparkNo(carpark.carParkNo);
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=> (CarparkInfoPage(carpark: carpark, review: review))));
-                }
-            ),
-          );
-        }
-        else{
-          _markers.add(
-            Marker(
-                markerId: MarkerId(carpark.carParkNo),
-                position: LatLng(carpark.xCoord, carpark.yCoord),
-                icon: _carparkGreenIcon,
-                infoWindow: InfoWindow(
-                  title: "Current Slot: "+carpark.currentSlot.toString() +
-                      " Total Slot: "+
-                      carpark.maxSlot.toString(),
-                  snippet: carpark.address,
-                ),
-                onTap: () async{
-                  var review = await reviewDB.getSingaleReviewbyCarparkNo(carpark.carParkNo);
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=> (CarparkInfoPage(carpark: carpark, review: review))));
-                }
-            ),
-          );
-        }
+    if(_initialcameraposition != null){
+      setState(() {
+        for (var carpark in carparks) {
+          print(carpark.carParkNo);
+          if(carpark.currentSlot <=10){
+            _markers.add(
+              Marker(
+                  markerId: MarkerId(carpark.carParkNo),
+                  position: LatLng(carpark.xCoord, carpark.yCoord),
+                  icon: _carparkRedIcon,
+                  infoWindow: InfoWindow(
+                    title: "Current Slot: "+carpark.currentSlot.toString() +
+                        " Total Slot: "+
+                        carpark.maxSlot.toString(),
+                    snippet: carpark.address,
+                  ),
+                  onTap: () async{
+                    var review = await reviewDB.getSingaleReviewbyCarparkNo(carpark.carParkNo);
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=> (CarparkInfoPage(carpark: carpark, review: review, currentLocation: _initialcameraposition,))));
+                  }
+              ),
+            );
+          }
+          else if(carpark.currentSlot>10 && carpark.currentSlot <=30){
+            _markers.add(
+              Marker(
+                  markerId: MarkerId(carpark.carParkNo),
+                  position: LatLng(carpark.xCoord, carpark.yCoord),
+                  icon: _carparkYellowIcon,
+                  infoWindow: InfoWindow(
+                    title: "Current Slot: "+carpark.currentSlot.toString() +
+                        " Total Slot: "+
+                        carpark.maxSlot.toString(),
+                    snippet: carpark.address,
+                  ),
+                  onTap: () async{
+                    var review = await reviewDB.getSingaleReviewbyCarparkNo(carpark.carParkNo);
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=> (CarparkInfoPage(carpark: carpark, review: review,currentLocation: _initialcameraposition,))));
+                  }
+              ),
+            );
+          }
+          else{
+            _markers.add(
+              Marker(
+                  markerId: MarkerId(carpark.carParkNo),
+                  position: LatLng(carpark.xCoord, carpark.yCoord),
+                  icon: _carparkGreenIcon,
+                  infoWindow: InfoWindow(
+                    title: "Current Slot: "+carpark.currentSlot.toString() +
+                        " Total Slot: "+
+                        carpark.maxSlot.toString(),
+                    snippet: carpark.address,
+                  ),
+                  onTap: () async{
+                    var review = await reviewDB.getSingaleReviewbyCarparkNo(carpark.carParkNo);
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=> (CarparkInfoPage(carpark: carpark, review: review,currentLocation: _initialcameraposition,))));
+                  }
+              ),
+            );
+          }
 
-      }
-    });
+        }
+      });
+    }
+
   }
 
   void _onMapCreated(GoogleMapController _cntlr) async {

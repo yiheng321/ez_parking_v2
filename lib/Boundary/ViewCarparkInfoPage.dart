@@ -1,26 +1,41 @@
 import 'package:ezparking/Controller/ReviewDatabse.dart';
-import 'package:ezparking/Utils/StarDisplay.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 import 'package:ezparking/Entity/Carpark.dart';
 import 'package:ezparking/Entity/Review.dart';
+import 'package:map_launcher/map_launcher.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'dart:math';
 
 class CarparkInfoPage extends StatefulWidget {
   @override
-  CarparkInfoPage({Key key, @required this.carpark, @required this.review})
+  CarparkInfoPage(
+      {Key key,
+      @required this.carpark,
+      @required this.review,
+      @required this.currentLocation})
       : super(key: key);
   final Carpark carpark;
   final Review review;
+  final LatLng currentLocation;
   _CarparkInfoPageState createState() => _CarparkInfoPageState();
 }
 
 class _CarparkInfoPageState extends State<CarparkInfoPage> {
   var reviewDB = ReviewDataBase();
+  double distance;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    distance = 110 *
+        sqrt((widget.carpark.xCoord - widget.currentLocation.latitude) *
+                (widget.carpark.xCoord - widget.currentLocation.latitude) +
+            (widget.carpark.yCoord - widget.currentLocation.longitude) *
+                (widget.carpark.yCoord - widget.currentLocation.longitude));
   }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -102,6 +117,35 @@ class _CarparkInfoPageState extends State<CarparkInfoPage> {
                           ),
                         ],
                       ),
+                      Column(
+                        children: [
+                          Container(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Text("Distance",
+                                    style: TextStyle(fontSize: 10)),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            margin: const EdgeInsets.only(top: 5),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Text(
+                                    distance.toStringAsFixed(
+                                            distance.truncateToDouble() ==
+                                                    distance
+                                                ? 0
+                                                : 2) +
+                                        " km",
+                                    style: TextStyle(fontSize: 20)),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                 ),
@@ -161,8 +205,8 @@ class _CarparkInfoPageState extends State<CarparkInfoPage> {
                     color: Colors.red[500],
                   ),
                 ),
-                titleSection(
-                    "Review", "Cost", buildStarReview(widget.review.cost, "Cost")),
+                titleSection("Review", "Cost",
+                    buildStarReview(widget.review.cost, "Cost")),
                 titleSection("Review", "Convenience",
                     buildStarReview(widget.review.convenience, "Convenience")),
                 titleSection("Review", "Security",
@@ -175,7 +219,49 @@ class _CarparkInfoPageState extends State<CarparkInfoPage> {
                       buildButtonColumn(
                           Colors.blue.shade300, Icons.call, 'CALL', () {}),
                       buildButtonColumn(
-                          Colors.blue.shade300, Icons.near_me, 'ROUTE', () {}),
+                          Colors.blue.shade300, Icons.near_me, 'ROUTE',
+                          () async {
+                        try {
+                          final current = Coords(
+                              widget.currentLocation.latitude,
+                              widget.currentLocation.longitude);
+                          final dest = Coords(
+                              widget.carpark.xCoord, widget.carpark.yCoord);
+                          final availableMaps = await MapLauncher.installedMaps;
+
+                          showModalBottomSheet(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return SafeArea(
+                                child: SingleChildScrollView(
+                                  child: Container(
+                                    child: Wrap(
+                                      children: <Widget>[
+                                        for (var map in availableMaps)
+                                          ListTile(
+                                            onTap: () => map.showDirections(
+                                                origin: current,
+                                                destination: dest,
+                                                destinationTitle:
+                                                    widget.carpark.address),
+                                            title: Text(map.mapName),
+                                            leading: SvgPicture.asset(
+                                              map.icon,
+                                              height: 30.0,
+                                              width: 30.0,
+                                            ),
+                                          ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                          );
+                        } catch (e) {
+                          print(e);
+                        }
+                      }),
                       buildButtonColumn(
                           Colors.blue.shade300, Icons.share, 'SHARE', () {}),
                     ],
@@ -224,35 +310,42 @@ class _CarparkInfoPageState extends State<CarparkInfoPage> {
   }
 
   Widget buildStarReview(int mark, String reviewType) {
-    return  SmoothStarRating(
-          allowHalfRating: false,
-          onRated: (v) async{
-            if(reviewType == "Cost"){
-              int total = widget.review.cost * widget.review.numOfReviewCost;
-              widget.review.numOfReviewCost++;
-              widget.review.cost = ((total +v.toInt()) / widget.review.numOfReviewCost).toInt();
-              reviewDB.updateReviewById(widget.review);
-            }
-            if(reviewType == "Convenience"){
-              int total = widget.review.convenience * widget.review.numOfReviewConvenience;
-              widget.review.numOfReviewConvenience++;
-              widget.review.convenience = ((total +v.toInt()) / widget.review.numOfReviewConvenience).toInt();
-              reviewDB.updateReviewById(widget.review);
-            }
-            if(reviewType == "Security"){
-              int total = widget.review.security * widget.review.numOfReviewSecurity;
-              widget.review.numOfReviewSecurity++;
-              widget.review.security = ((total +v.toInt()) / widget.review.numOfReviewSecurity).toInt();
-              reviewDB.updateReviewById(widget.review);
-            }
-          },
-          starCount: 5,
-          rating: mark.toDouble(),
-          size: 40.0,
-          isReadOnly: false,
-          color: Colors.amber.shade300,
-          borderColor: Colors.amber.shade300,
-          spacing: 0.0);
+    return SmoothStarRating(
+        allowHalfRating: false,
+        onRated: (v) async {
+          if (reviewType == "Cost") {
+            int total = widget.review.cost * widget.review.numOfReviewCost;
+            widget.review.numOfReviewCost++;
+            widget.review.cost =
+                ((total + v.toInt()) / widget.review.numOfReviewCost).toInt();
+            reviewDB.updateReviewById(widget.review);
+          }
+          if (reviewType == "Convenience") {
+            int total = widget.review.convenience *
+                widget.review.numOfReviewConvenience;
+            widget.review.numOfReviewConvenience++;
+            widget.review.convenience =
+                ((total + v.toInt()) / widget.review.numOfReviewConvenience)
+                    .toInt();
+            reviewDB.updateReviewById(widget.review);
+          }
+          if (reviewType == "Security") {
+            int total =
+                widget.review.security * widget.review.numOfReviewSecurity;
+            widget.review.numOfReviewSecurity++;
+            widget.review.security =
+                ((total + v.toInt()) / widget.review.numOfReviewSecurity)
+                    .toInt();
+            reviewDB.updateReviewById(widget.review);
+          }
+        },
+        starCount: 5,
+        rating: mark.toDouble(),
+        size: 40.0,
+        isReadOnly: false,
+        color: Colors.amber.shade300,
+        borderColor: Colors.amber.shade300,
+        spacing: 0.0);
   }
 
   Column buildButtonColumn(
