@@ -65,7 +65,7 @@ class ReviewDataBase {
   Future<Review> getSingaleReviewbyCarparkNo(String carparkNumber) async {
     var dbClient = await db;
     List<Map> maps = await dbClient
-        .rawQuery("SELECT * FROM $TABLE where $carParkNo = $carparkNumber");
+        .rawQuery("SELECT * FROM $TABLE where $carParkNo = ?", [carparkNumber]);
     Review review;
     if (maps.length > 0) {
       for (int i = 0; i < maps.length; i++) {

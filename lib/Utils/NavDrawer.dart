@@ -47,11 +47,6 @@ class NavDrawer extends StatelessWidget {
             child: Center(child: Text('Current User: ' + userName)),
           ),
           ListTile(
-            leading: Icon(Icons.border_color),
-            title: Text('Feedback'),
-            onTap: () => {Navigator.of(context).pop()},
-          ),
-          ListTile(
             leading: Icon(Icons.exit_to_app),
             title: Text('Logout'),
             onTap: () => {_signOut()},

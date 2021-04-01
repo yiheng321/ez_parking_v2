@@ -1,16 +1,9 @@
-import 'package:flutter/material.dart';
 import 'package:ezparking/Utils/FormCard.dart';
 import 'package:ezparking/Utils/FormCardSignUp.dart' as su;
 import 'package:ezparking/Services/Auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-// import 'package:ezparking/Boundary/SignUpPage.dart';
-import 'package:ezparking/Boundary/LoginPage.dart';
 
-
-
-
-
-abstract class validBase{
+abstract class validBase {
   Future<bool> Signin();
   Future<bool> Signup();
   bool validateSignin();
@@ -23,9 +16,7 @@ abstract class validBase{
 
 bool validationstate = false;
 
-
 class Validation {
-
   String status;
   User user;
 
@@ -42,7 +33,6 @@ class Validation {
     print("$username + $password");
 
     //await Auth().checklogin(username, password);
-
   }
 
   Future<void> Signup() async {
@@ -50,7 +40,7 @@ class Validation {
       su.formKey.currentState.save();
       print("sign up details: ");
       print(su.username + "    " + su.password + "    " + su.confpassword);
-      print (Auth().currentUser);
+      print(Auth().currentUser);
       await Auth().createUserWithEmailAndPassword(su.username, su.password);
       return validateUser(username, password);
     } else {
@@ -59,12 +49,11 @@ class Validation {
   }
 
   bool validateSignin() {
-    print ('Validationstate is '+ validationstate.toString() );
+    print('Validationstate is ' + validationstate.toString());
     // print ('Auth().currentUser.email == username is '+ (Auth().currentUser.email == username).toString() );
     // print (" Auth().currentUser   is " + (Auth().currentUser.email ) .toString() );
-    return (validationstate ?  ( Auth().currentUser != null ) : false );
+    return (validationstate ? (Auth().currentUser != null) : false);
   }
-
 
   // wrap to authStateChanges(), to set login state for initial debuging purples
   bool validateUser(String email, String password) {
@@ -75,8 +64,7 @@ class Validation {
           print('sign In successful');
           print(user.toString());
           return 1;
-        }
-        else {
+        } else {
           print('fail');
           return 0;
         }
@@ -90,9 +78,8 @@ class Validation {
     });
   }
 
-
   Map<String, String> GetStatus(String mode, bool status) {
-    Map <String, String> _StatusList = {'mode':'', 'title': '', 'body': ''};
+    Map<String, String> _StatusList = {'mode': '', 'title': '', 'body': ''};
     print("GetStatus status is : ");
     print(status);
     _StatusList['mode'] = mode;
@@ -106,16 +93,14 @@ class Validation {
     return _StatusList;
   }
 
-
   String validateUserName(String value) {
     if (value.isEmpty) {
-      validationstate  = false;
+      validationstate = false;
       return 'username can not be empty';
     } else if (value.length < 4) {
       validationstate = false;
       return 'username < 4 digits';
-    }
-    else {
+    } else {
       validationstate = true;
     }
     return null;
@@ -125,13 +110,10 @@ class Validation {
     if (value.isEmpty) {
       validationstate = false;
       return 'password can not be none';
-    } else if (value
-        .trim()
-        .length < 4) {
+    } else if (value.trim().length < 4) {
       validationstate = false;
       return 'password < 4 digits';
-    }
-    else {
+    } else {
       validationstate = true;
     }
     return null;
@@ -141,20 +123,15 @@ class Validation {
     if (value.isEmpty) {
       validationstate = false;
       return 'password can not be none';
-    } else if (value
-        .trim()
-        .length < 4) {
+    } else if (value.trim().length < 4) {
       validationstate = false;
       return 'password < 4 digits';
-    }
-    else if (value != su.passwordController.text) {
+    } else if (value != su.passwordController.text) {
       validationstate = false;
       return 'password not the same';
-    }
-    else {
+    } else {
       validationstate = true;
     }
     return null;
   }
-
 }

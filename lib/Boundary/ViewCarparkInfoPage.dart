@@ -33,11 +33,9 @@ Column buildButtonColumn(
 class CarparkInfoPage extends StatelessWidget {
   CarparkInfoPage(
       {Key key,
-      @required this.auth,
       @required this.carpark,
       @required this.review})
       : super(key: key);
-  final AuthBase auth;
   final Carpark carpark;
   final Review review;
 
@@ -45,10 +43,13 @@ class CarparkInfoPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-          drawer: NavDrawer(auth: auth),
           appBar: AppBar(
             title: Text('Carpark Infomation'),
             backgroundColor: Colors.amber.shade300,
+              leading: IconButton(icon:Icon(Icons.arrow_back),
+                //onPressed:() => Navigator.pop(context, false),
+                onPressed:() => Navigator.of(context).pop(),
+              )
           ),
           body: SingleChildScrollView(
             child: Column(

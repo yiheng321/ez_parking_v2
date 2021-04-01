@@ -81,7 +81,7 @@ class LoginPage extends StatelessWidget  {
                         Row(
                           children: <Widget>[
                             Text(
-                                'EzParking 1',
+                                'EzParking',
                                 style: TextStyle(
                                   fontFamily: 'Poppins-Bold',
                                   fontSize: ScreenUtil.getInstance().setSp(46),

@@ -1,7 +1,5 @@
 import 'dart:convert';
-import 'dart:io';
-
-import 'package:flutter/cupertino.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:http/http.dart';
 
@@ -102,8 +100,7 @@ class PlaceApiProvider {
   }
 }
 
-void getCoordinates(String searchTerm) async {
+Future<LatLng> getCoordinates(String searchTerm) async {
   List<Location> locations = await locationFromAddress(searchTerm);
-  print(locations[0].latitude);
-  print(locations[0].longitude);
+  return LatLng(locations[0].latitude, locations[0].longitude);
 }
