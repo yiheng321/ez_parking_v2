@@ -1,4 +1,4 @@
-import 'dart:async' show Future, Timer;
+import 'dart:async' show Timer;
 import 'dart:convert';
 import 'package:ezparking/Controller/CarparkDatabase.dart';
 import 'package:http/http.dart' as http;

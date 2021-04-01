@@ -1,5 +1,3 @@
-import "package:ezparking/Entity/Review.dart";
-
 class Carpark {
   int _id;
   String _carParkNo;

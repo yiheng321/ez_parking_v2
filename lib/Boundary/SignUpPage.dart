@@ -7,13 +7,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ezparking/Utils/FormCardSignUp.dart';
 
 import 'package:ezparking/Utils/PopupWindows.dart';
-import 'package:ezparking/Boundary/LoginPage.dart';
 import 'package:ezparking/Services/Validation.dart';
 
 
 final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 User user;
-// bool loginState, SignUpStatus = false;
 
 class SignUpPage extends StatelessWidget  {
   const SignUpPage({Key key, @required this.auth}) : super(key: key);
@@ -78,12 +76,7 @@ class SignUpPage extends StatelessWidget  {
                               children: [
                                 IconButton(icon: Icon(Icons.login_rounded,size: 38,color: Colors.brown,),
                                     onPressed: (){
-                                      // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> LoginPage(auth: Auth())));
                                       Navigator.of(context).pop();
-                                      // LoginPage(auth: Auth(),);
-                                      // Navigator.push(context, MaterialPageRoute(builder: (context)=> LoginPage( auth: Auth(),)));
-
-                                      // Navigator.of(context).pushNamedAndRemoveUntil(LoginPage.routeName,(Route<dynamic> route) => true);
                                     }),
                                 Text('to Login',style: TextStyle(fontWeight: FontWeight.bold),),
                               ],
@@ -178,7 +171,6 @@ class SignUpPage extends StatelessWidget  {
                         SizedBox(
                           height: ScreenUtil.getInstance().setHeight(40),
                         ),
-
                       ],
                     )
                 )

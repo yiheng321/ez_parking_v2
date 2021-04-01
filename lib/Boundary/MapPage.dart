@@ -2,7 +2,6 @@ import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'package:ezparking/Controller/CarparkDatabase.dart';
 import 'package:ezparking/Controller/ReviewDatabse.dart';
-import 'package:ezparking/Services/ApiService.dart';
 import 'package:ezparking/Services/Auth.dart';
 import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
@@ -288,17 +287,17 @@ class _MapPageState extends State<MapPage> {
                           value: _radius,
                           items: [
                             DropdownMenuItem(
-                              child: Text("Radius 1km"),
+                              child: Text("Radius 1.5km"),
                               value: 1.0,
                             ),
                             DropdownMenuItem(
-                              child: Text("Radius 2km"),
+                              child: Text("Radius 3km"),
                               value: 2.0,
                             ),
                             DropdownMenuItem(
-                                child: Text("Radius 3km"), value: 3.0),
+                                child: Text("Radius 4.5km"), value: 3.0),
                             DropdownMenuItem(
-                                child: Text("Radius 4km"), value: 4.0)
+                                child: Text("Radius 6km"), value: 4.0)
                           ],
                           onChanged: (value) {
                             setState(() {
