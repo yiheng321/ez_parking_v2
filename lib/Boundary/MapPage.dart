@@ -104,11 +104,11 @@ class _MapPageState extends State<MapPage> {
                         " Total Slot: "+
                         carpark.maxSlot.toString(),
                     snippet: carpark.address,
+                      onTap: () async{
+                        var review = await reviewDB.getSingaleReviewbyCarparkNo(carpark.carParkNo);
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=> (CarparkInfoPage(carpark: carpark, review: review, currentLocation: _initialcameraposition,))));
+                      }
                   ),
-                  onTap: () async{
-                    var review = await reviewDB.getSingaleReviewbyCarparkNo(carpark.carParkNo);
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=> (CarparkInfoPage(carpark: carpark, review: review, currentLocation: _initialcameraposition,))));
-                  }
               ),
             );
           }
@@ -142,11 +142,11 @@ class _MapPageState extends State<MapPage> {
                         " Total Slot: "+
                         carpark.maxSlot.toString(),
                     snippet: carpark.address,
+                      onTap: () async{
+                        var review = await reviewDB.getSingaleReviewbyCarparkNo(carpark.carParkNo);
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=> (CarparkInfoPage(carpark: carpark, review: review,currentLocation: _initialcameraposition,))));
+                      }
                   ),
-                  onTap: () async{
-                    var review = await reviewDB.getSingaleReviewbyCarparkNo(carpark.carParkNo);
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=> (CarparkInfoPage(carpark: carpark, review: review,currentLocation: _initialcameraposition,))));
-                  }
               ),
             );
           }
@@ -258,15 +258,16 @@ class _MapPageState extends State<MapPage> {
                                   );
                                   _markers.clear();
                                   _circle.clear();
-                                  _circle.add(Circle(
+                                  setState(() {
+                                    _circle.add(Circle(
                                         circleId: CircleId("1"),
                                         center: _initialcameraposition,
                                         radius: _radius * 1500,
                                         fillColor:
                                             Colors.lightBlue.withOpacity(0.2),
                                         strokeWidth: 2));
+                                  });
                                   addMarker();
-
                                 });
                               }
                             },
