@@ -5,8 +5,8 @@ import 'package:http/http.dart' as http;
 
 void loadCarparkList() async {
   var carparkDB = CarparkDataBase();
-  List firstList;
-  List secondList;
+  List<String> firstList = [];
+  List<int> secondList = [];
   var response = await http.get(
       Uri.encodeFull(
           "https://api.data.gov.sg/v1/transport/carpark-availability"),
@@ -17,7 +17,7 @@ void loadCarparkList() async {
       firstList.add(obj["carpark_number"]);
       secondList.add(int.parse(obj["carpark_info"][0]["lots_available"]));
     }
-    Map map = Map.fromIterables(firstList, secondList);
+    Map<String, int> map = Map.fromIterables(firstList, secondList);
     carparkDB.updateCarParkSlotbyID(map);
   }
 }

@@ -258,16 +258,15 @@ class _MapPageState extends State<MapPage> {
                                   );
                                   _markers.clear();
                                   _circle.clear();
-                                  setState(() {
-                                    _circle.add(Circle(
+                                  _circle.add(Circle(
                                         circleId: CircleId("1"),
                                         center: _initialcameraposition,
                                         radius: _radius * 1500,
                                         fillColor:
                                             Colors.lightBlue.withOpacity(0.2),
                                         strokeWidth: 2));
-                                  });
                                   addMarker();
+
                                 });
                               }
                             },
