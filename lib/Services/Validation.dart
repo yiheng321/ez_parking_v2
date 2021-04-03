@@ -52,7 +52,9 @@ class Validation {
     print('Validationstate is ' + validationstate.toString());
     // print ('Auth().currentUser.email == username is '+ (Auth().currentUser.email == username).toString() );
     // print (" Auth().currentUser   is " + (Auth().currentUser.email ) .toString() );
-    return (validationstate ? (Auth().currentUser != null) : false);
+//     return (validationstate ? (Auth().currentUser != null) : false);
+    return (validationstate ? true : false);
+
   }
 
   // wrap to authStateChanges(), to set login state for initial debuging purples
