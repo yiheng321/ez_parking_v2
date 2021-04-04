@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:ezparking/Services/Validation.dart';
+import 'file:///C:/Coding/AndroidStudioProjects/ez_parking_v2/lib/Controller/Validation.dart';
 
-String username, password, confpassword;
+String username, password;
 GlobalKey<FormState> formKey = GlobalKey<FormState>();
 TextEditingController userNameController = new TextEditingController();
 TextEditingController passwordController = new TextEditingController();
 TextEditingController confirmpasswordController = new TextEditingController();
 
-class FormCard_signup extends StatelessWidget {
+class FormCard extends StatelessWidget {
   static const Map<String, String> Pages = {
     'login': "Login",
     'signup': "Sign Up"
@@ -17,7 +17,7 @@ class FormCard_signup extends StatelessWidget {
   String PageName;
   double Height;
 
-  FormCard_signup(String page) {
+  FormCard(String page) {
     this.PageName = Pages[page];
   }
 
@@ -71,7 +71,7 @@ class FormCard_signup extends StatelessWidget {
                         : null,
                   ),
                   keyboardType: TextInputType.text,
-                  validator: Validation().validatePassWord,
+                  validator: Validation().validateUserName,
                   onSaved: (String value) {
                     username = value;
                   },
@@ -96,26 +96,9 @@ class FormCard_signup extends StatelessWidget {
                     password = value;
                   },
                 ),
-                TextFormField(
-                  controller: confirmpasswordController,
-                  decoration: InputDecoration(
-                    labelText: 'Confirm PassWord',
-                    icon: Icon(Icons.lock),
-                    suffixIcon: (true)
-                        ? IconButton(
-                            icon: Icon(Icons.clear),
-                            onPressed: () {
-                              confirmpasswordController.clear();
-                            },
-                          )
-                        : null,
-                  ),
-                  obscureText: true,
-                  validator: Validation().validateConfirmPassWord,
-                  onSaved: (String value) {
-                    confpassword = value;
-                  },
-                ),
+                SizedBox(
+                  height: ScreenUtil.getInstance().setHeight(10),
+                )
               ],
             ),
           ),

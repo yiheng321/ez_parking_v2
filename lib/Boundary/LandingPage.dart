@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'MapPage.dart';
 import 'LoginPage.dart';
-import 'package:ezparking/Services/Auth.dart';
+import 'file:///C:/Coding/AndroidStudioProjects/ez_parking_v2/lib/Controller/Auth.dart';
 
 class LandingPage extends StatelessWidget {
   const LandingPage({Key key, @required this.auth}) : super(key: key);

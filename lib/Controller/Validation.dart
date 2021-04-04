@@ -1,6 +1,6 @@
-import 'package:ezparking/Utils/FormCard.dart';
-import 'package:ezparking/Utils/FormCardSignUp.dart' as su;
-import 'package:ezparking/Services/Auth.dart';
+import 'file:///C:/Coding/AndroidStudioProjects/ez_parking_v2/lib/WidgetUtils/FormCard.dart';
+import 'file:///C:/Coding/AndroidStudioProjects/ez_parking_v2/lib/WidgetUtils/FormCardSignUp.dart' as su;
+import 'package:ezparking/Controller//Auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 abstract class validBase {
@@ -14,7 +14,7 @@ abstract class validBase {
   String validateConfirmPassWord(String value);
 }
 
-bool validationstate = false;
+bool _validationstate = false;
 
 class Validation {
   String status;
@@ -24,57 +24,37 @@ class Validation {
     if (formKey.currentState.validate()) {
       formKey.currentState.save();
       await Auth().signInWithEmailAndPassword(username, password);
-      return validateUser(username, password);
+      validateUser(username, password);
     } else {
       print('Sign in validation fail');
     }
-
-    print("login details: ");
-    print("$username + $password");
-
-    //await Auth().checklogin(username, password);
   }
 
   Future<void> Signup() async {
     if (su.formKey.currentState.validate()) {
       su.formKey.currentState.save();
-      print("sign up details: ");
-      print(su.username + "    " + su.password + "    " + su.confpassword);
-      print(Auth().currentUser);
+
       await Auth().createUserWithEmailAndPassword(su.username, su.password);
-      return validateUser(username, password);
+      validateUser(username, password);
     } else {
       print('Sign up validation fail');
     }
   }
 
   bool validateSignin() {
-    print('Validationstate is ' + validationstate.toString());
-    // print ('Auth().currentUser.email == username is '+ (Auth().currentUser.email == username).toString() );
-    // print (" Auth().currentUser   is " + (Auth().currentUser.email ) .toString() );
-//     return (validationstate ? (Auth().currentUser != null) : false);
-    return (validationstate ? true : false);
-
+    return (_validationstate ? true : false);
   }
 
-  // wrap to authStateChanges(), to set login state for initial debuging purples
-  bool validateUser(String email, String password) {
+  Future<void> validateUser(String email, String password) {
     Auth().authStateChanges().listen((User user) {
       try {
-        // use aaaaaa as test
-        if (user != null || (email == 'aaaa' && password == 'aaaa')) {
-          print('sign In successful');
-          print(user.toString());
+        if (user != null ) {
           return 1;
         } else {
-          print('fail');
           return 0;
         }
-        print("check sign In");
-        print(status);
       } catch (e) {
-        status = 'error';
-        print("Opz, error !!");
+        print(e);
         return 0;
       }
     });
@@ -97,42 +77,42 @@ class Validation {
 
   String validateUserName(String value) {
     if (value.isEmpty) {
-      validationstate = false;
+      _validationstate = false;
       return 'username can not be empty';
     } else if (value.length < 4) {
-      validationstate = false;
+      _validationstate = false;
       return 'username < 4 digits';
     } else {
-      validationstate = true;
+      _validationstate = true;
     }
     return null;
   }
 
   String validatePassWord(String value) {
     if (value.isEmpty) {
-      validationstate = false;
+      _validationstate = false;
       return 'password can not be none';
     } else if (value.trim().length < 4) {
-      validationstate = false;
+      _validationstate = false;
       return 'password < 4 digits';
     } else {
-      validationstate = true;
+      _validationstate = true;
     }
     return null;
   }
 
   String validateConfirmPassWord(String value) {
     if (value.isEmpty) {
-      validationstate = false;
+      _validationstate = false;
       return 'password can not be none';
     } else if (value.trim().length < 4) {
-      validationstate = false;
+      _validationstate = false;
       return 'password < 4 digits';
     } else if (value != su.passwordController.text) {
-      validationstate = false;
+      _validationstate = false;
       return 'password not the same';
     } else {
-      validationstate = true;
+      _validationstate = true;
     }
     return null;
   }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:ezparking/Services/Auth.dart';
+import 'file:///C:/Coding/AndroidStudioProjects/ez_parking_v2/lib/Controller/Auth.dart';
 
 class NavDrawer extends StatelessWidget {
   NavDrawer({Key key, @required this.auth}) : super(key: key) {
