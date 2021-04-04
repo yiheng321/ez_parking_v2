@@ -1,19 +1,30 @@
-class Location {
-  final double lat;
-  final double lng;
+class Place {
+  String streetNumber;
+  String street;
+  String city;
+  String zipCode;
 
-  Location({this.lat, this.lng});
+  Place({
+    this.streetNumber,
+    this.street,
+    this.city,
+    this.zipCode,
+  });
 
-  factory Location.fromJson(Map<dynamic, dynamic> parsedJson) {
-    return Location(lat: parsedJson['lat'], lng: parsedJson['lng']);
+  @override
+  String toString() {
+    return 'Place(streetNumber: $streetNumber, street: $street, city: $city, zipCode: $zipCode)';
   }
 }
 
-class Geometry {
-  final Location location;
+class Suggestion {
+  final String placeId;
+  final String description;
 
-  Geometry({this.location});
+  Suggestion(this.placeId, this.description);
 
-  Geometry.fromJson(Map<dynamic, dynamic> parsedJson)
-      : location = Location.fromJson(parsedJson['location']);
+  @override
+  String toString() {
+    return 'Suggestion(description: $description, placeId: $placeId)';
+  }
 }

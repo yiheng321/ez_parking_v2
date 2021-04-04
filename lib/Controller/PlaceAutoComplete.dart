@@ -2,50 +2,21 @@ import 'dart:convert';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:http/http.dart';
+import 'package:ezparking/Entity/Place.dart';
 
-class Place {
-  String streetNumber;
-  String street;
-  String city;
-  String zipCode;
-
-  Place({
-    this.streetNumber,
-    this.street,
-    this.city,
-    this.zipCode,
-  });
-
-  @override
-  String toString() {
-    return 'Place(streetNumber: $streetNumber, street: $street, city: $city, zipCode: $zipCode)';
-  }
-}
-
-class Suggestion {
-  final String placeId;
-  final String description;
-
-  Suggestion(this.placeId, this.description);
-
-  @override
-  String toString() {
-    return 'Suggestion(description: $description, placeId: $placeId)';
-  }
-}
 
 class PlaceApiProvider {
   final client = Client();
 
-  PlaceApiProvider(this.sessionToken);
+  PlaceApiProvider(this._sessionToken);
 
-  final sessionToken;
+  final _sessionToken;
 
-  final String apiKey = 'AIzaSyAzedSahYVFaCTK3_YP19NYYd9_mW3EI5A';
+  final String _apiKey = 'AIzaSyAzedSahYVFaCTK3_YP19NYYd9_mW3EI5A';
 
   Future<List<Suggestion>> fetchSuggestions(String input, String lang) async {
     final request =
-        'https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$input&language=$lang&components=country:sg&key=$apiKey&sessiontoken=$sessionToken';
+        'https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$input&language=$lang&components=country:sg&key=$_apiKey&sessiontoken=$_sessionToken';
     final response = await client.get(request);
 
     if (response.statusCode == 200) {
@@ -66,7 +37,7 @@ class PlaceApiProvider {
 
   Future<Place> getPlaceDetailFromId(String placeId) async {
     final request =
-        'https://maps.googleapis.com/maps/api/place/details/json?place_id=$placeId&fields=address_component&key=$apiKey&sessiontoken=$sessionToken';
+        'https://maps.googleapis.com/maps/api/place/details/json?place_id=$placeId&fields=address_component&key=$_apiKey&sessiontoken=$_sessionToken';
     final response = await client.get(request);
 
     if (response.statusCode == 200) {
@@ -98,9 +69,10 @@ class PlaceApiProvider {
       throw Exception('Failed to fetch suggestion');
     }
   }
+  static Future<LatLng> getCoordinates(String searchTerm) async {
+    List<Location> locations = await locationFromAddress(searchTerm);
+    return LatLng(locations[0].latitude, locations[0].longitude);
+  }
 }
 
-Future<LatLng> getCoordinates(String searchTerm) async {
-  List<Location> locations = await locationFromAddress(searchTerm);
-  return LatLng(locations[0].latitude, locations[0].longitude);
-}
+

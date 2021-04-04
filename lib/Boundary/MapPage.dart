@@ -12,6 +12,7 @@ import 'package:ezparking/Boundary/SearchPage.dart';
 import 'package:uuid/uuid.dart';
 import 'package:ezparking/Controller/PlaceAutoComplete.dart';
 import 'package:ezparking/Boundary/ViewCarparkInfoPage.dart';
+import 'package:ezparking/Entity/Place.dart';
 
 const kGoogleApiKey = "AIzaSyAzedSahYVFaCTK3_YP19NYYd9_mW3EI5A";
 
@@ -243,7 +244,7 @@ class _MapPageState extends State<MapPage> {
                               if (result != null) {
                                 widget._textController.text =
                                     result.description;
-                                _initialcameraposition = await getCoordinates(
+                                _initialcameraposition = await PlaceApiProvider.getCoordinates(
                                     widget._textController.text);
                                 setState(() async {
                                   await _mapController.animateCamera(
