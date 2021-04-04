@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'file:///C:/Coding/AndroidStudioProjects/ez_parking_v2/lib/Controller/Validation.dart';
+import 'package:ezparking/Controller/Validation.dart';
 
 String username, password, confpassword;
 GlobalKey<FormState> formKey = GlobalKey<FormState>();

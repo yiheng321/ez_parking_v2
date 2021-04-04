@@ -2,15 +2,15 @@ import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'package:ezparking/Controller/CarparkDatabase.dart';
 import 'package:ezparking/Controller/ReviewDatabse.dart';
-import 'file:///C:/Coding/AndroidStudioProjects/ez_parking_v2/lib/Controller/Auth.dart';
+import 'package:ezparking/Controller/Auth.dart';
 import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter/material.dart';
-import 'file:///C:/Coding/AndroidStudioProjects/ez_parking_v2/lib/WidgetUtils/NavDrawer.dart';
+import 'package:ezparking/WidgetUtils/NavDrawer.dart';
 import 'package:ezparking/Boundary/SearchPage.dart';
 import 'package:uuid/uuid.dart';
-import 'file:///C:/Coding/AndroidStudioProjects/ez_parking_v2/lib/Controller/PlaceAutoComplete.dart';
+import 'package:ezparking/Controller/PlaceAutoComplete.dart';
 import 'package:ezparking/Boundary/ViewCarparkInfoPage.dart';
 
 const kGoogleApiKey = "AIzaSyAzedSahYVFaCTK3_YP19NYYd9_mW3EI5A";

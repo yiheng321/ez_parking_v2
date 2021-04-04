@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'file:///C:/Coding/AndroidStudioProjects/ez_parking_v2/lib/Controller/Validation.dart';
+import 'package:ezparking/Controller/Validation.dart';
 
 class Popwindow extends StatelessWidget {
   @override

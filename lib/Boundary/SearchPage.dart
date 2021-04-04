@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'file:///C:/Coding/AndroidStudioProjects/ez_parking_v2/lib/Controller/PlaceAutoComplete.dart';
+import 'package:ezparking/Controller/PlaceAutoComplete.dart';
 
 class AddressSearch extends SearchDelegate<Suggestion> {
   AddressSearch(this.sessionToken) {

@@ -1,13 +1,13 @@
 import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'file:///C:/Coding/AndroidStudioProjects/ez_parking_v2/lib/Controller/Auth.dart';
+import 'package:ezparking/Controller/Auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'file:///C:/Coding/AndroidStudioProjects/ez_parking_v2/lib/WidgetUtils/FormCardSignUp.dart';
+import 'package:ezparking/WidgetUtils/FormCardSignUp.dart';
 
-import 'file:///C:/Coding/AndroidStudioProjects/ez_parking_v2/lib/WidgetUtils/PopupWindows.dart';
-import 'file:///C:/Coding/AndroidStudioProjects/ez_parking_v2/lib/Controller/Validation.dart';
+import 'package:ezparking/WidgetUtils/PopupWindows.dart';
+import 'package:ezparking/Controller/Validation.dart';
 
 
 final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();

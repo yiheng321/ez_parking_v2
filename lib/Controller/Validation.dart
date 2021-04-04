@@ -1,5 +1,5 @@
-import 'file:///C:/Coding/AndroidStudioProjects/ez_parking_v2/lib/WidgetUtils/FormCard.dart';
-import 'file:///C:/Coding/AndroidStudioProjects/ez_parking_v2/lib/WidgetUtils/FormCardSignUp.dart' as su;
+import 'package:ezparking/WidgetUtils/FormCard.dart';
+import 'package:ezparking/WidgetUtils/FormCardSignUp.dart' as su;
 import 'package:ezparking/Controller//Auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 

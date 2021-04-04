@@ -1,9 +1,9 @@
 import 'package:ezparking/Boundary/LandingPage.dart';
-import 'file:///C:/Coding/AndroidStudioProjects/ez_parking_v2/lib/Controller/Auth.dart';
+import 'package:ezparking/Controller/Auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'dart:async';
 
-import 'file:///C:/Coding/AndroidStudioProjects/ez_parking_v2/lib/Controller/ApiService.dart';
+import 'package:ezparking/Controller/ApiService.dart';
 import 'package:flutter/material.dart';
 
 
