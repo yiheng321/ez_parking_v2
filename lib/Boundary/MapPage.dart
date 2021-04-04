@@ -2,15 +2,15 @@ import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'package:ezparking/Controller/CarparkDatabase.dart';
 import 'package:ezparking/Controller/ReviewDatabse.dart';
-import 'package:ezparking/Services/Auth.dart';
+import 'package:ezparking/Controller/Auth.dart';
 import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:ezparking/Utils/NavDrawer.dart';
+import 'package:ezparking/WidgetUtils/NavDrawer.dart';
 import 'package:ezparking/Boundary/SearchPage.dart';
 import 'package:uuid/uuid.dart';
-import 'package:ezparking/Services/PlaceAutoComplete.dart';
+import 'package:ezparking/Controller/PlaceAutoComplete.dart';
 import 'package:ezparking/Boundary/ViewCarparkInfoPage.dart';
 
 const kGoogleApiKey = "AIzaSyAzedSahYVFaCTK3_YP19NYYd9_mW3EI5A";
@@ -40,23 +40,23 @@ class _MapPageState extends State<MapPage> {
     // TODO: implement initState
     super.initState();
 
-    getIcons();
-    setInitialLocation();
+    _getIcons();
+    _setInitialLocation();
   }
 
-  void getIcons() async{
-  final Uint8List markerIcon1 = await getBytesFromAsset('assets/red-dot.png', 100);
+  void _getIcons() async{
+  final Uint8List markerIcon1 = await _getBytesFromAsset('assets/red-dot.png', 100);
   _carparkRedIcon = BitmapDescriptor.fromBytes(markerIcon1);
 
-  final Uint8List markerIcon2 = await getBytesFromAsset('assets/green-dot.png', 100);
+  final Uint8List markerIcon2 = await _getBytesFromAsset('assets/green-dot.png', 100);
   _carparkGreenIcon = BitmapDescriptor.fromBytes(markerIcon2);
-  final Uint8List markerIcon3 = await getBytesFromAsset('assets/yellow-dot.png', 100);
+  final Uint8List markerIcon3 = await _getBytesFromAsset('assets/yellow-dot.png', 100);
   _carparkYellowIcon = BitmapDescriptor.fromBytes(markerIcon3);
-  final Uint8List markerIcon4 = await getBytesFromAsset('assets/blue-dot.png', 100);
+  final Uint8List markerIcon4 = await _getBytesFromAsset('assets/blue-dot.png', 100);
   _blueIcon = BitmapDescriptor.fromBytes(markerIcon4);
   }
 
-  void setInitialLocation() async {
+  void _setInitialLocation() async {
     // set the initial location by pulling the user's
     // current location from the location's getLocation()
     Position position = await Geolocator.getCurrentPosition(
@@ -67,14 +67,14 @@ class _MapPageState extends State<MapPage> {
     });
   }
 
-  Future<Uint8List> getBytesFromAsset(String path, int width) async {
+  Future<Uint8List> _getBytesFromAsset(String path, int width) async {
     ByteData data = await rootBundle.load(path);
     ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List(), targetWidth: width);
     ui.FrameInfo fi = await codec.getNextFrame();
     return (await fi.image.toByteData(format: ui.ImageByteFormat.png)).buffer.asUint8List();
   }
 
-  void addMarker() async {
+  void _addMarker() async {
 
     var xmin = _initialcameraposition.latitude - _radius / 101;
     var ymin = _initialcameraposition.longitude - _radius / 101;
@@ -92,7 +92,6 @@ class _MapPageState extends State<MapPage> {
                 icon: _blueIcon,
         ));
         for (var carpark in carparks) {
-          print(carpark.carParkNo);
           if(carpark.currentSlot <=10){
             _markers.add(
               Marker(
@@ -157,10 +156,9 @@ class _MapPageState extends State<MapPage> {
 
   }
 
-  void _onMapCreated(GoogleMapController _cntlr) async {
+  void onMapCreated(GoogleMapController _cntlr) async {
     _mapController = _cntlr;
-    var zoomlevel = await _mapController.getZoomLevel();
-    addMarker();
+    _addMarker();
     setState(() {
       _circle.add(Circle(
           circleId: CircleId("1"),
@@ -203,7 +201,7 @@ class _MapPageState extends State<MapPage> {
                       zoom: 15,
                     ),
                     mapType: MapType.normal,
-                    onMapCreated: _onMapCreated,
+                    onMapCreated: onMapCreated,
                     myLocationEnabled: true,
                     zoomGesturesEnabled: true,
                     markers: _markers,
@@ -267,7 +265,7 @@ class _MapPageState extends State<MapPage> {
                                             Colors.lightBlue.withOpacity(0.2),
                                         strokeWidth: 2));
                                   });
-                                  addMarker();
+                                  _addMarker();
                                 });
                               }
                             },
@@ -322,7 +320,7 @@ class _MapPageState extends State<MapPage> {
                                   fillColor: Colors.lightBlue.withOpacity(0.2),
                                   strokeWidth: 2));
                             });
-                            addMarker();
+                            _addMarker();
                           }),
                     ))
               ]),

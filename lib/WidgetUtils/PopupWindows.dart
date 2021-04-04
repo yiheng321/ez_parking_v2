@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ezparking/Services/Validation.dart';
+import 'package:ezparking/Controller/Validation.dart';
 
 class Popwindow extends StatelessWidget {
   @override
@@ -27,7 +27,7 @@ class Popwindow extends StatelessWidget {
       actions: <Widget>[
         new FlatButton(
           onPressed: () {
-            (list['mode'] == 'login') ? null : Navigator.of(context).pop();
+            (list['mode'] == 'login' && status == true) ? Navigator.of(context).pop(): (list['mode'] == 'sign up' && status == true)? Navigator.of(context).pop() : null;
             Navigator.of(context).pop();
             print(status);
             print("list['mode'] is :");

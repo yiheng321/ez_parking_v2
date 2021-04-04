@@ -58,7 +58,6 @@ class CarparkDataBase {
 
   Future<List<Carpark>> getAllCarpark() async {
     var dbClient = await db;
-    // List<Map> maps = await dbClient.query(TABLE, columns: [id, carParkNo, address,xCoord,yCoord,carParkType,shortTermParking,freeParking,nightParking,carParkDecks,gantryHeight,carParkBasement,maxSlot,currentSlot]);
     List<Map> maps = await dbClient.rawQuery("SELECT * FROM $TABLE");
     List<Carpark> carparks = [];
     if (maps.length > 0) {

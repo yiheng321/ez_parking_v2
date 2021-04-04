@@ -1,30 +1,21 @@
 import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:ezparking/Services/Auth.dart';
+import 'package:ezparking/Controller/Auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:ezparking/Utils/FormCardSignUp.dart';
+import 'package:ezparking/WidgetUtils/FormCardSignUp.dart';
 
-import 'package:ezparking/Utils/PopupWindows.dart';
-import 'package:ezparking/Services/Validation.dart';
+import 'package:ezparking/WidgetUtils/PopupWindows.dart';
+import 'package:ezparking/Controller/Validation.dart';
 
 
 final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-User user;
 
 class SignUpPage extends StatelessWidget  {
   const SignUpPage({Key key, @required this.auth}) : super(key: key);
   final AuthBase auth;
   static const routeName = '/signup';
-
-  Future<void> getUserDetail() async{
-    try{
-      print ("sign up clicked");
-    }catch(e){
-      print (e.toString());
-    }
-  }
 
 
   Widget horizontalLine() => Padding(
@@ -140,9 +131,6 @@ class SignUpPage extends StatelessWidget  {
                                                 ));
 
                                             Validation().Signup();
-                                            print ('HAHAHA current user is : ');
-                                            // print (Auth().currentUser.email);
-                                            //print("$username + $password");
                                             Timer(Duration(seconds: 1), () {
                                               showDialog(
                                                 context: context,

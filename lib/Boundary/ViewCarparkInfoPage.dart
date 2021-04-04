@@ -24,12 +24,12 @@ class CarparkInfoPage extends StatefulWidget {
 
 class _CarparkInfoPageState extends State<CarparkInfoPage> {
   var reviewDB = ReviewDataBase();
-  double distance;
+  double _distance;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    distance = 110 *
+    _distance = 110 *
         sqrt((widget.carpark.xCoord - widget.currentLocation.latitude) *
                 (widget.carpark.xCoord - widget.currentLocation.latitude) +
             (widget.carpark.yCoord - widget.currentLocation.longitude) *
@@ -134,9 +134,9 @@ class _CarparkInfoPageState extends State<CarparkInfoPage> {
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 Text(
-                                    distance.toStringAsFixed(
-                                            distance.truncateToDouble() ==
-                                                    distance
+                                    _distance.toStringAsFixed(
+                                            _distance.truncateToDouble() ==
+                                                    _distance
                                                 ? 0
                                                 : 2) +
                                         " km",
