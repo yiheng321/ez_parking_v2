@@ -42,6 +42,9 @@ class Validation {
   }
 
   bool validateSignin() {
+    return (_validationstate && (user != null )? true : false);
+  }
+  bool validateSignup() {
     return (_validationstate ? true : false);
   }
 
