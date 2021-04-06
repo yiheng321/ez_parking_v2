@@ -29,11 +29,11 @@ void main() {
       expect(user.isAnonymous, isFalse);
     });
 
-    test('with email and password', () async {
+    test('Sign in with email and password', () async {
       final auth = MockFirebaseAuth(mockUser: tUser);
       final result =
       await auth.signInWithEmailAndPassword(
-          email: 'some email', password: 'some password');
+          email: 'testEmail@gmail.com', password: 'testpassword');
       final user = await result.user;
       expect(user, tUser);
       expect(auth.authStateChanges(), emitsInOrder([isA<User>()]));
