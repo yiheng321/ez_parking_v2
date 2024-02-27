@@ -51,12 +51,8 @@ class Validation {
   Future<void> validateUser(String email, String password) {
     Auth().authStateChanges().listen((User user) {
       try {
-        if (user != null ) {
-          return 1;
-        } else {
-          return 0;
-        }
-      } catch (e) {
+        return 1;
+            } catch (e) {
         print(e);
         return 0;
       }

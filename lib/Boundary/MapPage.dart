@@ -1,4 +1,3 @@
-import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'package:ezparking/Controller/CarparkDatabase.dart';
 import 'package:ezparking/Controller/ReviewDatabse.dart';
@@ -84,77 +83,75 @@ class _MapPageState extends State<MapPage> {
     var carparkDB = CarparkDataBase();
     var reviewDB = ReviewDataBase();
     var carparks = await carparkDB.getCarparkByRadius(xmin, ymin, xmax, ymax);
-    if(_initialcameraposition != null){
-      setState(() {
-        _markers.add(
+    setState(() {
+      _markers.add(
+          Marker(
+              markerId: MarkerId("Current Position"),
+              position: _initialcameraposition,
+              icon: _blueIcon,
+      ));
+      for (var carpark in carparks) {
+        if(carpark.currentSlot <=10){
+          _markers.add(
             Marker(
-                markerId: MarkerId("Current Position"),
-                position: _initialcameraposition,
-                icon: _blueIcon,
-        ));
-        for (var carpark in carparks) {
-          if(carpark.currentSlot <=10){
-            _markers.add(
-              Marker(
-                  markerId: MarkerId(carpark.carParkNo),
-                  position: LatLng(carpark.xCoord, carpark.yCoord),
-                  icon: _carparkRedIcon,
-                  infoWindow: InfoWindow(
-                    title: "Current Slot: "+carpark.currentSlot.toString() +
-                        " Total Slot: "+
-                        carpark.maxSlot.toString(),
-                    snippet: carpark.address,
-                      onTap: () async{
-                        var review = await reviewDB.getSingaleReviewbyCarparkNo(carpark.carParkNo);
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=> (CarparkInfoPage(carpark: carpark, review: review, currentLocation: _initialcameraposition,))));
-                      }
-                  ),
-              ),
-            );
-          }
-          else if(carpark.currentSlot>10 && carpark.currentSlot <=30){
-            _markers.add(
-              Marker(
-                  markerId: MarkerId(carpark.carParkNo),
-                  position: LatLng(carpark.xCoord, carpark.yCoord),
-                  icon: _carparkYellowIcon,
-                  infoWindow: InfoWindow(
-                    title: "Current Slot: "+carpark.currentSlot.toString() +
-                        " Total Slot: "+
-                        carpark.maxSlot.toString(),
-                    snippet: carpark.address,
-                  ),
-                  onTap: () async{
-                    var review = await reviewDB.getSingaleReviewbyCarparkNo(carpark.carParkNo);
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=> (CarparkInfoPage(carpark: carpark, review: review,currentLocation: _initialcameraposition,))));
-                  }
-              ),
-            );
-          }
-          else{
-            _markers.add(
-              Marker(
-                  markerId: MarkerId(carpark.carParkNo),
-                  position: LatLng(carpark.xCoord, carpark.yCoord),
-                  icon: _carparkGreenIcon,
-                  infoWindow: InfoWindow(
-                    title: "Current Slot: "+carpark.currentSlot.toString() +
-                        " Total Slot: "+
-                        carpark.maxSlot.toString(),
-                    snippet: carpark.address,
-                      onTap: () async{
-                        var review = await reviewDB.getSingaleReviewbyCarparkNo(carpark.carParkNo);
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=> (CarparkInfoPage(carpark: carpark, review: review,currentLocation: _initialcameraposition,))));
-                      }
-                  ),
-              ),
-            );
-          }
-
+                markerId: MarkerId(carpark.carParkNo),
+                position: LatLng(carpark.xCoord, carpark.yCoord),
+                icon: _carparkRedIcon,
+                infoWindow: InfoWindow(
+                  title: "Current Slot: "+carpark.currentSlot.toString() +
+                      " Total Slot: "+
+                      carpark.maxSlot.toString(),
+                  snippet: carpark.address,
+                    onTap: () async{
+                      var review = await reviewDB.getSingaleReviewbyCarparkNo(carpark.carParkNo);
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=> (CarparkInfoPage(carpark: carpark, review: review, currentLocation: _initialcameraposition,))));
+                    }
+                ),
+            ),
+          );
         }
-      });
-    }
+        else if(carpark.currentSlot>10 && carpark.currentSlot <=30){
+          _markers.add(
+            Marker(
+                markerId: MarkerId(carpark.carParkNo),
+                position: LatLng(carpark.xCoord, carpark.yCoord),
+                icon: _carparkYellowIcon,
+                infoWindow: InfoWindow(
+                  title: "Current Slot: "+carpark.currentSlot.toString() +
+                      " Total Slot: "+
+                      carpark.maxSlot.toString(),
+                  snippet: carpark.address,
+                ),
+                onTap: () async{
+                  var review = await reviewDB.getSingaleReviewbyCarparkNo(carpark.carParkNo);
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=> (CarparkInfoPage(carpark: carpark, review: review,currentLocation: _initialcameraposition,))));
+                }
+            ),
+          );
+        }
+        else{
+          _markers.add(
+            Marker(
+                markerId: MarkerId(carpark.carParkNo),
+                position: LatLng(carpark.xCoord, carpark.yCoord),
+                icon: _carparkGreenIcon,
+                infoWindow: InfoWindow(
+                  title: "Current Slot: "+carpark.currentSlot.toString() +
+                      " Total Slot: "+
+                      carpark.maxSlot.toString(),
+                  snippet: carpark.address,
+                    onTap: () async{
+                      var review = await reviewDB.getSingaleReviewbyCarparkNo(carpark.carParkNo);
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=> (CarparkInfoPage(carpark: carpark, review: review,currentLocation: _initialcameraposition,))));
+                    }
+                ),
+            ),
+          );
+        }
 
+      }
+    });
+  
   }
 
   void onMapCreated(GoogleMapController _cntlr) async {
@@ -241,35 +238,33 @@ class _MapPageState extends State<MapPage> {
                                 delegate: AddressSearch(sessionToken),
                               );
                               // This will change the text displayed in the TextField
-                              if (result != null) {
-                                widget._textController.text =
-                                    result.description;
-                                _initialcameraposition = await PlaceApiProvider.getCoordinates(
-                                    widget._textController.text);
-                                setState(() async {
-                                  await _mapController.animateCamera(
-                                    CameraUpdate.newCameraPosition(
-                                      CameraPosition(
-                                        target: _initialcameraposition,
-                                        zoom: 15,
-                                      ),
+                              widget._textController.text =
+                                  result.description;
+                              _initialcameraposition = await PlaceApiProvider.getCoordinates(
+                                  widget._textController.text);
+                              setState(() async {
+                                await _mapController.animateCamera(
+                                  CameraUpdate.newCameraPosition(
+                                    CameraPosition(
+                                      target: _initialcameraposition,
+                                      zoom: 15,
                                     ),
-                                  );
-                                  _markers.clear();
-                                  _circle.clear();
-                                  setState(() {
-                                    _circle.add(Circle(
-                                        circleId: CircleId("1"),
-                                        center: _initialcameraposition,
-                                        radius: _radius * 1500,
-                                        fillColor:
-                                            Colors.lightBlue.withOpacity(0.2),
-                                        strokeWidth: 2));
-                                  });
-                                  _addMarker();
+                                  ),
+                                );
+                                _markers.clear();
+                                _circle.clear();
+                                setState(() {
+                                  _circle.add(Circle(
+                                      circleId: CircleId("1"),
+                                      center: _initialcameraposition,
+                                      radius: _radius * 1500,
+                                      fillColor:
+                                          Colors.lightBlue.withOpacity(0.2),
+                                      strokeWidth: 2));
                                 });
-                              }
-                            },
+                                _addMarker();
+                              });
+                                                        },
                             decoration: new InputDecoration(
                               prefixIcon: const Icon(
                                 Icons.search,

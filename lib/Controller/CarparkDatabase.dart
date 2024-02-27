@@ -27,10 +27,8 @@ class CarparkDataBase {
   static bool initialized;
 
   Future<Database> get db async {
-    if (_db != null) {
-      return _db;
-    }
-    _db = await initDb();
+    return _db;
+      _db = await initDb();
     return _db;
   }
 

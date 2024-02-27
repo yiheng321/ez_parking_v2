@@ -1,7 +1,7 @@
 import 'package:ezparking/Controller/ReviewDatabse.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:smooth_star_rating/smooth_star_rating.dart';
+import 'package:smooth_star_rating_null_safety/smooth_star_rating_null_safety.dart';
 import 'package:ezparking/Entity/Carpark.dart';
 import 'package:ezparking/Entity/Review.dart';
 import 'package:map_launcher/map_launcher.dart';
@@ -317,7 +317,7 @@ class _CarparkInfoPageState extends State<CarparkInfoPage> {
             int total = widget.review.cost * widget.review.numOfReviewCost;
             widget.review.numOfReviewCost++;
             widget.review.cost =
-                ((total + v.toInt()) / widget.review.numOfReviewCost).toInt();
+                (total + v.toInt()) ~/ widget.review.numOfReviewCost;
             reviewDB.updateReviewById(widget.review);
           }
           if (reviewType == "Convenience") {
@@ -325,8 +325,7 @@ class _CarparkInfoPageState extends State<CarparkInfoPage> {
                 widget.review.numOfReviewConvenience;
             widget.review.numOfReviewConvenience++;
             widget.review.convenience =
-                ((total + v.toInt()) / widget.review.numOfReviewConvenience)
-                    .toInt();
+                (total + v.toInt()) ~/ widget.review.numOfReviewConvenience;
             reviewDB.updateReviewById(widget.review);
           }
           if (reviewType == "Security") {
@@ -334,8 +333,7 @@ class _CarparkInfoPageState extends State<CarparkInfoPage> {
                 widget.review.security * widget.review.numOfReviewSecurity;
             widget.review.numOfReviewSecurity++;
             widget.review.security =
-                ((total + v.toInt()) / widget.review.numOfReviewSecurity)
-                    .toInt();
+                (total + v.toInt()) ~/ widget.review.numOfReviewSecurity;
             reviewDB.updateReviewById(widget.review);
           }
         },
